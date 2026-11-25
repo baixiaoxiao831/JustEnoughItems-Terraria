@@ -1,0 +1,14 @@
+name: Localized issue acknowledgment
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  reply:
+    uses: baixiaoxiao831/AE-Beyond-Dimensions/.github/workflows/issue-ack.yml@main
+    secrets:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

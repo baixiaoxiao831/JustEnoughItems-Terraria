@@ -28,8 +28,10 @@
 - **原版背包**　在配方页点击 `＋` 可定位至原版制作栏中的可用配方。个人设置中的「原生背包多级合成」默认关闭。开启后，保持鼠标空手，按住 `Ctrl` 并用左键点击 `＋`，即可在材料、制作站与配方条件满足时，依次制作中间材料和目标物品。
 - **AE 终端**　搭配已接入 JEI 的 AE 终端时，可在终端内共用同一套搜索，并直接从配方页向终端下单。
 
-## 致谢
+## 转载与素材许可
 
-本项目为面向《泰拉瑞亚》的非官方适配。JEI 界面素材来自 mezz 与 Just Enough Items 贡献者，随包中文字形取自 Noto Sans SC。
+欢迎在攻略、视频和模组推荐中介绍本模组，并附上[官方 Steam 创意工坊页面](https://steamcommunity.com/sharedfiles/filedetails/?id=3845723114)。如需将完整模组上传至其他平台、重新打包分发或发布修改版，请先联系作者确认授权。
 
-[原版 Just Enough Items](https://github.com/mezz/JustEnoughItems)
+本项目为面向《泰拉瑞亚》的非官方适配。界面图像、指南图标及模组图标使用了 mezz 与 Just Enough Items 贡献者的作品，采用 MIT 许可。[原版 Just Enough Items](https://github.com/mezz/JustEnoughItems)
+
+随包中文字形源自 Noto Sans SC，采用 SIL Open Font License 1.1。拼音检索使用的 Unicode Unihan 读音数据采用 Unicode License V3。各项第三方素材按各自许可使用，完整版权和许可声明见模组包内的 `Licenses` 目录。

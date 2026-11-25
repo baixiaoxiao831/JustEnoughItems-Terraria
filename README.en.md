@@ -28,8 +28,10 @@ Just Enough Items: Terraria Edition is an in-game item and recipe browser for Te
 - **Terraria inventory.** Click `+` on a recipe page to select an available recipe in Terraria’s crafting menu. For longer crafting chains, enable **Multi-step backpack crafting** in your personal settings (off by default). With no item on your cursor, hold `Ctrl` and left-click `+` to craft the intermediate items and then the final item, provided you have the required materials and stations and meet the recipe conditions.
 - **AE terminal.** A JEI-compatible AE terminal uses the same search filters and lets you place crafting orders directly from recipe pages.
 
-## Credits
+## Sharing, Redistribution, and Credits
 
-This project is an unofficial Terraria adaptation. The JEI interface artwork comes from mezz and the Just Enough Items contributors. The bundled Chinese glyphs are derived from Noto Sans SC.
+You’re welcome to feature this mod in guides, videos, and mod recommendations. Please include a link to the [official Steam Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3845723114) so players can find the latest version. If you’d like to upload the full mod to another platform, redistribute a repackaged copy, or publish a modified version, please contact the author first for permission.
 
-[Original Just Enough Items project](https://github.com/mezz/JustEnoughItems)
+This project is an unofficial Terraria adaptation of Just Enough Items for Minecraft. The interface artwork, in-game guide icon, and mod icon use artwork by mezz and the Just Enough Items contributors under the MIT License. [Original Just Enough Items project](https://github.com/mezz/JustEnoughItems)
+
+The bundled Chinese glyphs are derived from Noto Sans SC and are licensed under the SIL Open Font License 1.1. The Unihan pronunciation data used for Pinyin search is licensed under the Unicode License V3. Third-party materials remain available under their respective licenses. Full copyright and license notices are included in the mod’s `Licenses` folder.

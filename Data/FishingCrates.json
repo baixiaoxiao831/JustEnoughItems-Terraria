@@ -1,0 +1,138 @@
+{
+  "WoodenCrate": [
+    "困难模式前",
+    "水域；普通匣判定（未命中更高优先级的匣子）"
+  ],
+  "WoodenCrateHard": [
+    "困难模式",
+    "水域；普通匣判定（未命中更高优先级的匣子）"
+  ],
+  "IronCrate": [
+    "困难模式前",
+    "水域；命中不常见判定，且未命中更高优先级的匣子"
+  ],
+  "IronCrateHard": [
+    "困难模式",
+    "水域；命中不常见判定，且未命中更高优先级的匣子"
+  ],
+  "GoldenCrate": [
+    "困难模式前",
+    "水域；命中极稀有或传说判定，且未命中生物群落匣"
+  ],
+  "GoldenCrateHard": [
+    "困难模式",
+    "水域；命中极稀有或传说判定，且未命中生物群落匣"
+  ],
+  "DungeonFishingCrate": [
+    "困难模式前",
+    "地牢水域；已击败骷髅王；需命中稀有判定"
+  ],
+  "DungeonFishingCrateHard": [
+    "困难模式",
+    "地牢水域；已击败骷髅王；需命中稀有判定"
+  ],
+  "CorruptFishingCrate": [
+    "困难模式前",
+    "腐化之地水域；需命中稀有判定"
+  ],
+  "CorruptFishingCrateHard": [
+    "困难模式",
+    "腐化之地水域；需命中稀有判定"
+  ],
+  "CrimsonFishingCrate": [
+    "困难模式前",
+    "猩红之地水域；需命中稀有判定"
+  ],
+  "CrimsonFishingCrateHard": [
+    "困难模式",
+    "猩红之地水域；需命中稀有判定"
+  ],
+  "FloatingIslandFishingCrate": [
+    "困难模式前",
+    "太空层水域；需命中稀有判定"
+  ],
+  "FloatingIslandFishingCrateHard": [
+    "困难模式",
+    "太空层水域；需命中稀有判定"
+  ],
+  "HallowedFishingCrate": [
+    "困难模式前",
+    "神圣之地水域；需命中稀有判定"
+  ],
+  "HallowedFishingCrateHard": [
+    "困难模式",
+    "神圣之地水域；需命中稀有判定"
+  ],
+  "JungleFishingCrate": [
+    "困难模式前",
+    "丛林水域；需命中稀有判定"
+  ],
+  "JungleFishingCrateHard": [
+    "困难模式",
+    "丛林水域；需命中稀有判定"
+  ],
+  "FrozenCrate": [
+    "困难模式前",
+    "雪原水域；需命中稀有判定"
+  ],
+  "FrozenCrateHard": [
+    "困难模式",
+    "雪原水域；需命中稀有判定"
+  ],
+  "OasisCrate": [
+    "困难模式前",
+    "沙漠水域；需命中稀有判定"
+  ],
+  "OasisCrateHard": [
+    "困难模式",
+    "沙漠水域；需命中稀有判定"
+  ],
+  "OceanCrate": [
+    "困难模式前",
+    "海洋水域；颠倒世界亦可在满足高度条件的地下水域触发；需命中稀有判定"
+  ],
+  "OceanCrateHard": [
+    "困难模式",
+    "海洋水域；颠倒世界亦可在满足高度条件的地下水域触发；需命中稀有判定"
+  ],
+  "LavaCrate": [
+    "困难模式前",
+    "熔岩；具备熔岩垂钓能力，命中匣子判定后再通过 1/6 判定"
+  ],
+  "LavaCrateHard": [
+    "困难模式",
+    "熔岩；具备熔岩垂钓能力，命中匣子判定后再通过 1/6 判定"
+  ],
+  "CalamityMod/MonolithCrate": [
+    "困难模式前",
+    "星辉瘟疫水域；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/AstralCrate": [
+    "困难模式",
+    "星辉瘟疫水域；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/EutrophicCrate": [
+    "困难模式前",
+    "沉沦之海水域；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/PrismCrate": [
+    "困难模式",
+    "沉沦之海水域；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/SulphurousCrate": [
+    "困难模式前",
+    "硫磺海、深渊或深渊侧世界边缘 380 格内的水域；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/HydrothermalCrate": [
+    "困难模式",
+    "硫磺海、深渊或深渊侧世界边缘 380 格内的水域；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/SlagCrate": [
+    "困难模式前",
+    "硫火之崖的熔岩；具备熔岩垂钓能力；需同时命中匣子和稀有判定"
+  ],
+  "CalamityMod/BrimstoneCrate": [
+    "困难模式",
+    "硫火之崖的熔岩；具备熔岩垂钓能力；需同时命中匣子和稀有判定"
+  ]
+}

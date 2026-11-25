@@ -1,0 +1,71 @@
+Mods: {
+	JustEnoughItemsTerraria: {
+		HostOnly: 只有房主可以更改此配置。
+		HoverForHelp: 悬停查看搜索语法
+		CheatsLocked: 作弊取物已锁定，请在 JEI 房主设置中开启许可。
+		CheatsOn: 作弊取物已开启，Ctrl＋左键关闭。
+		CheatsOff: 作弊取物已关闭，Ctrl＋左键开启。
+
+		Items: {
+			GuideBottle: {
+				DisplayName: JEI指南
+				Tooltip:
+					'''
+					打开背包，点击左下角的合成总览，即可打开 JEI 界面，在右侧搜索物品。
+					悬停物品时，R 查看来源，U 查看用途，A 加入收藏。
+					使用前请在「设置 → 控件」中启用相应快捷键。
+					搜索支持 @ 模组筛选和 # 分类筛选，↑ 和 ↓ 可回看搜索词。
+					在背包中右键使用，领取火把、绳子、弱效治疗药水和回忆药水。
+					'''
+			}
+		}
+
+		Configs: {
+			BrowserClientConfig: {
+				DisplayName: JEI 个人设置
+
+				Density: {
+					Label: 非终端列表密度
+					Tooltip: −1 紧凑，0 标准，1 宽松。
+				}
+
+				TerminalDensity: {
+					Label: AE 终端列表密度
+					Tooltip: −1 紧凑，0 标准，1 宽松。
+				}
+
+				BackpackMultiStepCrafting: {
+					Label: 原生背包多级合成
+					Tooltip: 默认关闭。开启后，在背包配方页按 Ctrl＋左键点击「＋」，可使用原版制作栏可用的材料与制作站，依次制作中间材料和目标物品。AE 终端单独下单。
+				}
+
+				NewBookmarksFirst: {
+					Label: 新书签置顶
+					Tooltip: 开启后，新书签加入收藏栏最前面。
+				}
+
+				SearchHelp: {
+					Label: 搜索帮助
+					Tooltip: @ 模组，# 分类，拼音或首字母，- 排除，| 任选，双引号匹配短语，* 匹配任意文字。
+				}
+			}
+
+			BrowserServerConfig: {
+				DisplayName: JEI 房主设置
+
+				AllowCheatItems: {
+					Label: 允许作弊取物
+					Tooltip: 允许玩家使用 Ctrl＋左键切换目录取物。
+				}
+			}
+		}
+
+		Keybinds: {
+			ToggleBrowser.DisplayName: 打开或关闭配方查询器
+			ShowSources.DisplayName: 查询悬停物品的来源
+			ShowUses.DisplayName: 查询悬停物品的用途
+			Bookmark.DisplayName: 切换悬停条目的书签
+			Back.DisplayName: 返回上次查询
+		}
+	}
+}

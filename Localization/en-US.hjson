@@ -1,0 +1,71 @@
+Mods: {
+	JustEnoughItemsTerraria: {
+		HostOnly: Only the host can change this setting.
+		HoverForHelp: Hover for search syntax
+		CheatsLocked: Cheat items are locked in JEI host settings.
+		CheatsOn: Cheat items enabled. Ctrl + left click to disable.
+		CheatsOff: Cheat items disabled. Ctrl + left click to enable.
+
+		Items: {
+			GuideBottle: {
+				DisplayName: JEI Guide
+				Tooltip:
+					'''
+					Click the crafting overview at the bottom left of your inventory to open JEI and search on the right.
+					Hover over an item and press R for sources, U for uses, or A to bookmark.
+					Enable the corresponding key bindings in Settings → Controls.
+					Filter by mod with @ or by category with #. Up and Down recall previous searches.
+					Right-click in your inventory for torches, rope, lesser healing potions, and recall potions
+					'''
+			}
+		}
+
+		Configs: {
+			BrowserClientConfig: {
+				DisplayName: JEI client settings
+
+				Density: {
+					Label: Standalone list density
+					Tooltip: -1 compact, 0 standard, 1 spacious.
+				}
+
+				TerminalDensity: {
+					Label: AE terminal list density
+					Tooltip: -1 compact, 0 standard, 1 spacious.
+				}
+
+				BackpackMultiStepCrafting: {
+					Label: Multi-step backpack crafting
+					Tooltip: Off by default. In backpack recipes, Ctrl-click + to craft intermediate items and the result using native crafting materials and stations. AE terminal orders are separate.
+				}
+
+				NewBookmarksFirst: {
+					Label: Add new bookmarks first
+					Tooltip: Place newly added bookmarks at the beginning of the list.
+				}
+
+				SearchHelp: {
+					Label: Search help
+					Tooltip: Use @ for mods, # for categories, pinyin or initials, - to exclude, | for alternatives, double quotes for phrases, and * as a wildcard.
+				}
+			}
+
+			BrowserServerConfig: {
+				DisplayName: JEI host settings
+
+				AllowCheatItems: {
+					Label: Allow cheat items
+					Tooltip: Allow players to toggle catalog item spawning with Ctrl + left click.
+				}
+			}
+		}
+
+		Keybinds: {
+			ToggleBrowser.DisplayName: Open or close recipe browser
+			ShowSources.DisplayName: Show sources of hovered item
+			ShowUses.DisplayName: Show uses of hovered item
+			Bookmark.DisplayName: Bookmark hovered entry
+			Back.DisplayName: Previous query
+		}
+	}
+}

@@ -1,0 +1,3 @@
+MandarinReadings.tsv contains the code point and first kMandarin reading from Unicode 17.0.0 Unihan_Readings.txt. These Unicode data are loaded at startup; the searchable names come from the active game and mods. PhraseReadings.json supplies game-specific pronunciations.
+https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip
+See Unicode.txt for the Unicode License V3.

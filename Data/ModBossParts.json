@@ -1,0 +1,17 @@
+{
+  "CalamityMod/DesertScourgeBody": "CalamityMod/DesertScourgeHead",
+  "CalamityMod/DesertScourgeTail": "CalamityMod/DesertScourgeHead",
+  "CalamityMod/AquaticScourgeBody": "CalamityMod/AquaticScourgeHead",
+  "CalamityMod/AquaticScourgeBodyAlt": "CalamityMod/AquaticScourgeHead",
+  "CalamityMod/AquaticScourgeTail": "CalamityMod/AquaticScourgeHead",
+  "CalamityMod/RavagerClawLeft": "CalamityMod/RavagerBody",
+  "CalamityMod/RavagerClawRight": "CalamityMod/RavagerBody",
+  "CalamityMod/RavagerHead": "CalamityMod/RavagerBody",
+  "CalamityMod/RavagerLegLeft": "CalamityMod/RavagerBody",
+  "CalamityMod/RavagerLegRight": "CalamityMod/RavagerBody",
+  "CalamityMod/AstrumDeusBody": "CalamityMod/AstrumDeusHead",
+  "CalamityMod/AstrumDeusTail": "CalamityMod/AstrumDeusHead",
+  "CalamityMod/StormWeaverBody": "CalamityMod/StormWeaverHead",
+  "CalamityMod/StormWeaverTail": "CalamityMod/StormWeaverHead",
+  "CalamityMod/PolterPhantom": "CalamityMod/Polterghast"
+}

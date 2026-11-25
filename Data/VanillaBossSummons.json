@@ -1,0 +1,67 @@
+{
+  "EyeofCthulhu": [
+    "SuspiciousLookingEye"
+  ],
+  "EaterofWorldsHead": [
+    "WormFood"
+  ],
+  "EaterofWorldsBody": [
+    "WormFood"
+  ],
+  "EaterofWorldsTail": [
+    "WormFood"
+  ],
+  "SkeletronHead": [
+    "ClothierVoodooDoll"
+  ],
+  "KingSlime": [
+    "SlimeCrown"
+  ],
+  "WallofFlesh": [
+    "GuideVoodooDoll"
+  ],
+  "Retinazer": [
+    "MechanicalEye"
+  ],
+  "Spazmatism": [
+    "MechanicalEye"
+  ],
+  "SkeletronPrime": [
+    "MechanicalSkull"
+  ],
+  "TheDestroyer": [
+    "MechanicalWorm"
+  ],
+  "QueenBee": [
+    "Abeemination"
+  ],
+  "Golem": [
+    "LihzahrdAltar",
+    "LihzahrdPowerCell"
+  ],
+  "BrainofCthulhu": [
+    "BloodySpine"
+  ],
+  "DukeFishron": [
+    "TruffleWorm"
+  ],
+  "MoonLordHead": [
+    "CelestialSigil"
+  ],
+  "MoonLordCore": [
+    "CelestialSigil"
+  ],
+  "DD2Betsy": [
+    "DD2ElderCrystalStand",
+    "DD2ElderCrystal"
+  ],
+  "HallowBoss": [
+    "EmpressButterfly"
+  ],
+  "QueenSlimeBoss": [
+    "QueenSlimeCrystal"
+  ],
+  "Deerclops": [
+    "DeerThing"
+  ]
+}

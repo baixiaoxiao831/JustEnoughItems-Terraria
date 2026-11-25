@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <TmlPath Condition="'$(TmlPath)' == ''">D:/steam/steamapps/common/tModLoader</TmlPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(TmlPath)/tModLoader.dll" Private="false" />
+    <Reference Include="$(TmlPath)/Libraries/**/*.dll" Private="false" />
+    <Reference Remove="$(TmlPath)/Libraries/Native/**;$(TmlPath)/Libraries/**/runtime*/**;$(TmlPath)/Libraries/**/*.resources.dll;$(TmlPath)/Libraries/tModCodeAssist/**" />
+  </ItemGroup>
+</Project>

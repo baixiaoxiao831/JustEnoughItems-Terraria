@@ -1,0 +1,100 @@
+{
+  "Plantera": [
+    "CalamityMod/Portabulb"
+  ],
+  "CultistBoss": [
+    "CalamityMod/EidolonTablet"
+  ],
+  "CalamityMod/AquaticScourgeHead": [
+    "CalamityMod/Seafood"
+  ],
+  "CalamityMod/AstrumAureus": [
+    "CalamityMod/AstralChunk"
+  ],
+  "CalamityMod/AstrumDeusHead": [
+    "CalamityMod/TitanHeart",
+    "CalamityMod/Starcore"
+  ],
+  "CalamityMod/BrimstoneElemental": [
+    "CalamityMod/CharredIdol"
+  ],
+  "CalamityMod/Dragonfolly": [
+    "CalamityMod/ExoticPheromones"
+  ],
+  "CalamityMod/CalamitasClone": [
+    "CalamityMod/EyeofDesolation"
+  ],
+  "CalamityMod/CeaselessVoid": [
+    "CalamityMod/MarkofProvidence"
+  ],
+  "CalamityMod/DarkEnergy": [
+    "CalamityMod/MarkofProvidence"
+  ],
+  "CalamityMod/Crabulon": [
+    "CalamityMod/DecapoditaSprout"
+  ],
+  "CalamityMod/Cryogen": [
+    "CalamityMod/CryoKey"
+  ],
+  "CalamityMod/DesertScourgeHead": [
+    "CalamityMod/DesertMedallion"
+  ],
+  "CalamityMod/DevourerofGodsHead": [
+    "CalamityMod/CosmicWorm"
+  ],
+  "CalamityMod/HiveMind": [
+    "CalamityMod/Teratoma"
+  ],
+  "CalamityMod/Anahita": [
+    "CalamityMod/NaiadsWarhorn"
+  ],
+  "CalamityMod/Leviathan": [
+    "CalamityMod/NaiadsWarhorn"
+  ],
+  "CalamityMod/OldDuke": [
+    "CalamityMod/BloodwormItem"
+  ],
+  "CalamityMod/PerforatorHive": [
+    "CalamityMod/BloodyWormFood"
+  ],
+  "CalamityMod/PlaguebringerGoliath": [
+    "CalamityMod/Abombination"
+  ],
+  "CalamityMod/Polterghast": [
+    "CalamityMod/NecroplasmicBeacon"
+  ],
+  "CalamityMod/ProfanedGuardianCommander": [
+    "CalamityMod/ProfanedShard"
+  ],
+  "CalamityMod/Providence": [
+    "CalamityMod/ProfanedCore"
+  ],
+  "CalamityMod/RavagerBody": [
+    "CalamityMod/DeathWhistle"
+  ],
+  "CalamityMod/Signus": [
+    "CalamityMod/MarkofProvidence"
+  ],
+  "CalamityMod/CrimulanPaladin": [
+    "CalamityMod/OverloadedSludge"
+  ],
+  "CalamityMod/EbonianPaladin": [
+    "CalamityMod/OverloadedSludge"
+  ],
+  "CalamityMod/SlimeGodCore": [
+    "CalamityMod/OverloadedSludge"
+  ],
+  "CalamityMod/StormWeaverHead": [
+    "CalamityMod/MarkofProvidence"
+  ],
+  "CalamityMod/SupremeCalamitas": [
+    "CalamityMod/AshesofCalamity",
+    "CalamityMod/CeremonialUrn"
+  ],
+  "CalamityMod/Yharon": [
+    "CalamityMod/YharonEgg"
+  ],
+  "CatalystMod/Astrageldon": [
+    "CatalystMod/AstralCommunicator"
+  ]
+}

@@ -6,23 +6,11 @@ on:
     types: [opened, reopened, synchronize, ready_for_review]
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  issues: write
+  pull-requests: write
 jobs:
-  label:
-    if: ${{ github.event_name == 'issues' }}
-    permissions: {issues: write}
-    uses: baixiaoxiao831/AE-Beyond-Dimensions/.github/workflows/mod-maintenance.yml@main
-    secrets:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  review:
-    if: ${{ github.event_name == 'pull_request_target' && !github.event.pull_request.draft }}
-    permissions: {pull-requests: write}
-    uses: baixiaoxiao831/AE-Beyond-Dimensions/.github/workflows/mod-maintenance.yml@main
-    secrets:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  preview:
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    permissions: {}
+  maintenance:
     uses: baixiaoxiao831/AE-Beyond-Dimensions/.github/workflows/mod-maintenance.yml@main
     secrets:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

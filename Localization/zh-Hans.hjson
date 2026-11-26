@@ -1,5 +1,405 @@
 Mods: {
 	JustEnoughItemsTerraria: {
+		Browser: {
+			NoFoundFor: 没有「{0}」的{1}记录
+			Shimmer: 微光{0}
+			DoubleClickToCollapseAlternativeStations: 双击收起同类工作方块（共 {0} 种）
+			DoubleClickToExpandAlternativeStations: 双击展开同类工作方块（共 {0} 种）
+			BaseDropRate: "基础掉率 "
+			Month: "{0}月"
+			DayOfTheMonth: 每月{0}日
+			RequiresTheFollowingToBeFalse: 不满足「{0}」
+			PreHardmode: 困难模式前
+			WaterCommonCrateRollAfterHigherPriority: 水域；普通匣判定（未命中更高优先级的匣子）
+			Hardmode: 困难模式
+			WaterUncommonRollAfterHigherPriorityCrates: 水域；命中不常见判定，且未命中更高优先级的匣子
+			WaterVeryRareOrLegendaryRollAfter: 水域；命中极稀有或传说判定，且未命中生物群落匣
+			DungeonWaterAfterSkeletronRequiresARare: 地牢水域；已击败骷髅王；需命中稀有判定
+			CorruptionWaterRequiresARareRoll: 腐化之地水域；需命中稀有判定
+			CrimsonWaterRequiresARareRoll: 猩红之地水域；需命中稀有判定
+			SpaceWaterRequiresARareRoll: 太空层水域；需命中稀有判定
+			HallowWaterRequiresARareRoll: 神圣之地水域；需命中稀有判定
+			JungleWaterRequiresARareRoll: 丛林水域；需命中稀有判定
+			SnowWaterRequiresARareRoll: 雪原水域；需命中稀有判定
+			DesertWaterRequiresARareRoll: 沙漠水域；需命中稀有判定
+			OceanWaterOrUndergroundWaterAtThe: 海洋水域；颠倒世界亦可在满足高度条件的地下水域触发；需命中稀有判定
+			LavaRequiresLavaFishingAndA1: 熔岩；具备熔岩垂钓能力，命中匣子判定后再通过 1/6 判定
+			AstralInfectionWaterRequiresBothCrateAnd: 星辉瘟疫水域；需同时命中匣子和稀有判定
+			SunkenSeaWaterRequiresBothCrateAnd: 沉沦之海水域；需同时命中匣子和稀有判定
+			WaterInTheSulphurousSeaAbyssOr: 硫磺海、深渊或深渊侧世界边缘 380 格内的水域；需同时命中匣子和稀有判定
+			BrimstoneCragLavaRequiresLavaFishingA: 硫火之崖的熔岩；具备熔岩垂钓能力；需同时命中匣子和稀有判定
+			NormalOrHallowedGrass: 普通草地、神圣草地
+			MatureNotBlooming: 成熟未开花
+			Nighttime: 夜间
+			Blooming: 开花
+			Daytime: 白天
+			JungleGrass: 丛林草地
+			BareDirtOrMud: 无草的土块或泥块
+			WhileThePlantIsNotGlowing: 植株不发光
+			WhileThePlantIsGlowing: 植株不定时发光
+			CorruptOrCrimsonGrassOrStone: 腐化地或猩红地的草地、石块
+			ExceptOnBloodMoonOrFullMoon: 血月夜、满月夜除外
+			OnABloodMoonOrFullMoon: 血月夜或满月夜
+			InlandSandOrPearlsand: 内陆的沙块或珍珠沙块
+			NoRainOrRainClouds: 无雨、无雨云
+			DuringRainOrUnderRainClouds: 下雨或有雨云时
+			AshBlocksOrAshGrass: 灰烬块、灰烬草地
+			DuringRainOrOutsideBloomingHours: 雨天或开花时段外
+			DryWeatherAfter345PMUntil: 无雨，15:45 后至 19:30
+			SnowOrIceBlocksIncludingInfectedVariants: 雪块或冰块（含感染变种）
+			RemainsOpenAfterBlooming: 开花后持续开放
+			UndergroundDirtStoneMudOrJungleGrass: 地下土块、石块、泥块或丛林草地
+			Wild: 野生
+			SurfaceGrassOrHallowedGrassWithNo: 地表无背景墙的普通或神圣草地
+			SurfaceGrassHallowedGrassOrJungleGrass: 地表无背景墙的普通、神圣或丛林草地
+			BottomOfUndergroundPools: 地下水池底部
+			TopOfACactus: 仙人掌顶端
+			UndersideOfUndergroundDirtBlocks: 地下土块底面
+			GrassMossOrDirt: 草地、苔藓或土块
+			GrowsOnlyInHardmode: 困难模式才会生长
+			ConditionIsNeverMet: 条件恒不成立
+			NoAdditionalRequirement: 无额外限制
+			NoActiveInstanceRecordedFor: 未记录到在场的
+			OpenParen: （
+			CloseParen: ）
+			Null: 空
+			DropTarget: 掉落目标
+			Player: 玩家
+			S: 的
+			S2: "的 "
+			TargetModAIState: 目标的模组 AI 状态
+			TargetAI: 目标 AI
+			TargetModAI: 目标的模组 AI
+			StateSlot: " 状态第 "
+			SlotSuffix: " 项"
+			Lowercase: （转为小写）
+			Contains: 含有「
+			CloseQuote: 」
+			If: （若
+			Then: ，取
+			Else: ，否则取
+			Active: 在场的
+			Count: 数量
+			Present: 在场
+			Is: 为
+			ListSeparator: 、
+			OpenQuote: 「
+			AnyListedValue: 之一
+			And: 且
+			Or: 或
+			SinglePlayer: 单人模式
+			Multiplayer: 多人模式
+			MultiplayerClient: 多人客户端
+			SinglePlayerOrMultiplayerServer: 单人或多人服务器端
+			MultiplayerServer: 多人服务器端
+			SinglePlayerOrMultiplayerClient: 单人或多人客户端
+			And2: 与
+			HaveACombinedActiveCountOfAt: 的在场总数不超过 1
+			IsNot: 不为
+			LessThan: 小于
+			GreaterThan: 大于
+			AtMost: 不超过
+			AtLeast: 至少为
+			Crafting: 常规合成
+			Shimmer2: 微光
+			CreatureDrops: 生物资源
+			NPCShops: NPC 交易
+			Harvesting: 采收
+			NPCSpawns: 怪物来源
+			TreasureBags: 开启宝藏袋
+			FishingCrates: 开启匣子
+			Fishing: 钓鱼
+			CloseCraftingOverview: 收起合成总览
+			RecipeBookmark: 配方书签
+			Order: 待下单：
+			AllocatedNeeded: 已分配 / 需要：
+			ShiftBookmarkKeyCancelThisGroupAnd: Shift＋收藏键：取消整组材料和对应订单
+			AvailableNeeded: 已有 / 需要：
+			SearchHistory: 查询历史
+			PreviousPage: 上一页
+			NextPage: 下一页
+			Uses: 用途
+			Sources: 来源
+			PreviousCategory: 上一分类
+			NextCategory: 下一分类
+			ShowBookmarkedRecipesFirst: 优先显示已收藏的配方
+			RefreshAvailableRecipesUsingCurrentMaterialsAnd: 按当前材料和条件重新选择可用配方
+			CraftingStation: 工作方块
+			TargetIsInThe: 目标为「
+			Form: 」形态
+			In: 在
+			SummonedUsing: 用「
+			Separator2: 」召唤
+			MonthWhenModsLoaded: 模组加载时的月份
+			DayOfMonthWhenModsLoaded: 模组加载时的日期（日）
+			ActiveEntityID: 的在场编号
+			PlayerHasBuff: 玩家具有「
+			Or2: 」或「
+			Separator3: 」增益
+			Defeated: 击败
+			ThenDefeated: 后又击败了
+			Projectile: 射弹
+			IsNot2: 不是
+			Ranged: 远程
+			Melee: 近战
+			Magic: 魔法
+			Summon: 召唤
+			DamageType: 伤害类型
+			OnTheLastProjectileHit: 上次射弹命中时，
+			HighlightedItemsCanBeCrafted: 高亮的物品可以制作。
+			MissingIngredients: 缺少物品
+			MissingStation: 缺少制作站：
+			UnmetCondition: 条件未满足：
+			CouldNotCheckCondition: 无法确认条件：
+			ThisRecipeIsCurrentlyUnavailableInThe: 原版制作栏当前未提供这条配方
+			HoldShiftForFullDetails: 按住 Shift 显示全部信息
+			CraftingStationViewSources: 工作方块 · 查看来源
+			HideJEIBookmarks: 隐藏JEI书签
+			ShowJEIBookmarks: 显示JEI书签
+			CraftingIngredients: 合成物品
+			Unbound: 未绑定
+			HoverOverAnIngredientAndPressTo: 将鼠标悬停在一个原料上，按“{0}”将其添加为书签。
+			FishingPower0: 渔力 0
+			TruffleWormsSummonDukeFishron: 松露虫用于召唤鱼龙公爵
+			RequiresAFishingPole: 需要鱼竿
+			RequiresBait: 需要鱼饵
+			CurrentFishingPowerIsZero: 当前渔力为零
+			FishingPowerPondSize: 渔力 {0} · 浮标水量 {1}/{2}
+			InsufficientPondSizeOrFishingPowerTo: 钓点水量或渔力不足 · 无法出匣
+			FishingPowerAssumesAFullPondAnd: 渔力 {0} · 按足量池水、无鱼饵桶估算
+			IncludesTheCalamityPearlAccessoryBonus: 已计入灾厄珍珠饰品效果
+			CrateRollRareRollWithinCrates: 匣子判定 {0} · 匣内稀有 {1}
+			RangeIncludesLuckVariation: 区间含幸运波动
+			FinalCatchChanceForThisModdedCrate: 此模组匣的最终判定未知
+			Lava: 熔岩
+			ThisCrate0: "此匣 0% · "
+			WrongWorldProgression: 世界阶段不符
+			LavaFishingAbilityRequired: 缺少熔岩垂钓能力
+			BobberIsInTheWrongLiquid: 浮标液体不符
+			ChanceInThisEnvironment: "当前环境目标判定 "
+			ChanceInTheListedBiome: "满足下列群落时 "
+			PerItemRollBeforeJunkEnemiesAnd: 每次进入物品分支计，未扣垃圾、敌怪和模组截获。
+			Defeated2: 已击败
+			Jungle: 丛林
+			Underworld: 地狱
+			JungleLab: 丛林实验室
+			UnderworldLab: 地狱实验室
+			In2: 位于
+			FrostMoon: 霜月
+			PumpkinMoon: 南瓜月
+			Waves15161718And19: 第15–16、17–18、19波起的额外通过率分别为1/4、1/3、1/2；专家及以上分别为5/18、7/18、2/3
+			BothRemixAndForTheWorthyWorld: 世界同时启用颠倒世界与受苦世界特性，且其余种类的机械首领均已离场
+			NotInThePlayerSInventory: 玩家物品栏中没有
+			ExpertMode: 专家模式
+			MasterMode: 大师模式
+			RemixWorld: 颠倒世界
+			GetFixedBoiWorld: 天顶世界
+			ForTheWorthyWorld: 受苦世界
+			DrunkWorld: 醉酒世界
+			Celebrationmk10World: 十周年世界
+			NotTheBeesWorld: 蜂蜜世界
+			TheConstantWorld: 饥荒联动世界
+			NoTrapsWorld: 无陷阱世界
+			Rain: 下雨
+			BloodMoon: 血月
+			SolarEclipse: 日食
+			Christmas: 圣诞节
+			Halloween: 万圣节
+			MoonPhase: 月相
+			InGameTime: 游戏时间
+			NetworkMode: 联网模式
+			WorldNPCs: 场上 NPC
+			Players: 玩家列表
+			LocalPlayer: 本地玩家
+			LocalPlayerID: 本地玩家编号
+			WorldID: 世界编号
+			CrimsonWorld: 猩红世界
+			SpawnedFromAStatue: 雕像生成
+			TargetIsABoss: 目标为首领
+			TargetIsFriendly: 目标为友好 NPC
+			TargetIsATownNPC: 目标为城镇 NPC
+			TargetNPCType: 目标 NPC 类型
+			TargetNPCNetID: 目标 NPC 注册编号
+			NPCName: NPC 名字
+			NPCHealth: NPC 当前生命
+			NPCMaximumHealth: NPC 生命上限
+			NPCTargetPlayerID: NPC 的目标玩家编号
+			ParentNPCID: NPC 所属主体编号
+			NPCAIState: NPC AI 状态
+			CurrentEventWave: 当前事件波数
+			LunarEventsActive: 月亮事件进行中
+			NPCCoinValue: NPC 钱币价值
+			LastInteractingPlayerID: 上次与 NPC 交互的玩家编号
+			KingSlimeDefeated: 已击败史莱姆王
+			EyeOfCthulhuDefeated: 已击败克苏鲁之眼
+			EaterOfWorldsOrBrainOfCthulhu: 已击败世界吞噬怪或克苏鲁之脑
+			SkeletronDefeated: 已击败骷髅王
+			QueenBeeDefeated: 已击败蜂王
+			DeerclopsDefeated: 已击败独眼巨鹿
+			QueenSlimeDefeated: 已击败史莱姆皇后
+			AtLeastOneMechanicalBossDefeated: 已击败至少一个机械首领
+			TheDestroyerDefeated: 已击败毁灭者
+			TheTwinsDefeated: 已击败双子魔眼
+			SkeletronPrimeDefeated: 已击败机械骷髅王
+			PlanteraDefeated: 已击败世纪之花
+			GolemDefeated: 已击败石巨人
+			DukeFishronDefeated: 已击败猪龙鱼公爵
+			EmpressOfLightDefeated: 已击败光之女皇
+			LunaticCultistDefeated: 已击败拜月教邪教徒
+			MoonLordDefeated: 已击败月亮领主
+			GoblinArmyDefeated: 已击退哥布林军队
+			FrostLegionDefeated: 已击退雪人军团
+			PirateInvasionDefeated: 已击退海盗入侵
+			MartianMadnessDefeated: 已击退火星暴乱
+			EntityIsActive: 实体处于活动状态
+			EntityID: 实体编号
+			EntityPosition: 实体位置
+			TargetNPC: 目标 NPC
+			DefeatedTier3OfTheOldOne: 已抵御第三级撒旦军队
+			PlayerName: 玩家名称
+			PlayerIsDead: 玩家已死亡
+			CharacterDifficulty: 角色难度
+			PlayerTeam: 玩家队伍
+			CompletedAnglerQuests: 玩家已完成的渔夫任务数
+			PlayerInventory: 玩家物品栏
+			PlayerEquipment: 玩家装备栏
+			HeldItem: 手持物品
+			PlayerBuffType: 玩家增益类型
+			PlayerHealth: 玩家当前生命
+			MaximumPlayerHealth: 玩家生命上限
+			DemonHeartConsumed: 已使用恶魔之心
+			OnTheSurface: 位于地表
+			InTheUnderground: 位于地下层
+			InTheCavernLayer: 位于洞穴层
+			InTheUnderworld: 位于地狱
+			InSpace: 位于太空
+			InTheDungeon: 位于地牢
+			InTheJungle: 位于丛林
+			InTheSnowBiome: 位于雪原
+			InTheDesert: 位于沙漠
+			AtTheOcean: 位于海洋
+			InTheHallow: 位于神圣之地
+			InTheCorruption: 位于腐化之地
+			InTheCrimson: 位于猩红之地
+			InAGlowingMushroomBiome: 位于发光蘑菇生物群落
+			InAGraveyard: 位于墓地
+			InTheForest: 位于森林
+			SourceNPC: 掉落来源 NPC
+			SourceItemID: 来源物品编号
+			SimulatedDrop: 模拟掉落
+			ItemType: 物品类型
+			ItemCount: 物品数量
+			ItemRarity: 物品稀有度
+			ItemValue: 物品价值
+			WorldSCopperTierOre: 世界的铜级矿石
+			WorldSIronTierOre: 世界的铁级矿石
+			WorldSSilverTierOre: 世界的银级矿石
+			WorldSGoldTierOre: 世界的金级矿石
+			WorldSCobaltTierOre: 世界的钴级矿石
+			WorldSMythrilTierOre: 世界的秘银级矿石
+			WorldSAdamantiteTierOre: 世界的精金级矿石
+			Setting: 设置「{0}」
+			DefeatedByPlayer: 玩家已击败
+			Colon: ：
+			ResultingCreature: 产出生物
+			SourceCreature: 来源生物
+			Habitat: 生长地
+			Conditions: 条件
+			Tools: 工具
+			Method: 方式
+			BaseDropRate2: 基础掉率
+			Free: 免费
+			Price: 价格
+			BasePrice: 基础价
+			AlsoRequires: 另需
+			Details: 说明
+			ShimmerTransformation: 微光转换
+			ShimmerDecrafting: 微光拆解
+			SummoningItems: 召唤物
+			BestiaryHabitatsAndConditions: 图鉴环境与条件
+			NoSpawnHabitatListedInTheBestiary: 图鉴未登记生成环境
+			RecipeFrom: 配方来源：
+			RecipeSource: 配方来源
+			LocateSource: 定位来源
+			LocateOnMap: 地图定位
+			LocateResult: 定位产出
+			RemoveThisRecipeFromBookmarks: 从书签中移除该配方。
+			BookmarkThisRecipe: 添加该配方到书签。
+			SelectAndHighlightThisRecipeInThe: 选中并高亮原版制作栏的这条配方
+			FillTheAECraftingBench: 填入 AE 工作台
+			RequiresAnAvailableAECraftingBenchCrafting: 需要可用的 AE 工作台、工作站和配方条件
+			CtrlLeftClickCraftInYourInventory: Ctrl＋左键：在背包中合成物品
+			CtrlLeftClickOpenCraftingOrders: Ctrl＋左键：打开下单界面
+			HarvestByHand: 普通采收
+			HarvestWithTools: 工具采收
+			ShowOnMap: 在地图上标出
+			MapDisabled: 地图已禁用
+			ThisNPCIsCurrentlyAbsent: 该 NPC 当前不在世界中
+			ShiftLeftClickLocateOnMap: Shift＋左键：在地图上定位
+			RowsOf: 第 {0}–{1} 行，共 {2} 行
+			Missing: 缺少数量：{0}
+			RegisteredFishingCrateCatchConditionsAreUnknown: 已登记为钓鱼匣，具体捕获条件尚未核实
+			Fishing2: 垂钓
+			None: 无
+			CheckedInGameBy: 由 {0} 的 {1} 在游戏中判定
+			GraveyardBiome: 墓地环境
+			RequiresStation: 需要工作方块：
+			FullMoon: 满月
+			WaningGibbous: 右侧四分之三亮
+			ThirdQuarter: 右半月
+			WaningCrescent: 右侧四分之一亮
+			NewMoon: 新月
+			WaxingCrescent: 左侧四分之一亮
+			FirstQuarter: 左半月
+			WaxingGibbous: 左侧四分之三亮
+			AfterDefeatingSkeletron: 击败骷髅王后
+			AfterDefeatingGolem: 击败石巨人后
+			SubjectToThisDecraftingRecipeSBoss: 受当前拆解配方的首领进度限制
+			CoinLuckGained: "增加投币幸运值 "
+			ShimmerTransformationAfterDefeatingMoonLord: 微光转换 · 击败月亮领主后
+			BeforeDefeatingMoonLord: 击败月亮领主前
+			ShimmerTransformation2: "微光转换 · "
+			RevertsToAnEmptyMusicBox: 恢复为空八音盒
+			ShimmerTransformationBeforeDefeatingMoonLord: 微光转换 · 击败月亮领主前
+			ReleasesTheDivaSlimeIfStillLocked: 尚未解锁时释放闪耀史莱姆
+			ReleasesCreature: "释放生物 · "
+			WhenHigherPriorityDecraftingConditionsAreUnmet: 较高优先级拆解条件未满足时
+			EachIngredientHasA13Chance: 每份材料有 1/3 概率不返还
+			RegisteredQuantitiesShownModsMayAdjustThem: 数量为登记值，模组可动态调整
+			OpenContainer: 开启容器
+			GlobalConditionalDrop: 全局条件掉落
+			AIState: AI 状态
+			UnmetCondition2: 未满足（
+			ClassicMode: 经典模式
+			OutsideMasterMode: 非大师模式
+			NotSpawnedByAStatue: 非雕像生成
+			AfterDefeatingPlantera: 击败世纪之花后
+			OutsideARemixWorld: 非颠倒世界
+			OutsideTheConstant: 非饥荒联动世界
+			RemixWorldHardmode: 颠倒世界 · 困难模式
+			RemixWorldPreHardmode: 颠倒世界 · 困难模式前
+			ClassicModeTargetIsABoss: 经典模式 · 目标为首领
+			TheOtherTwinIsNoLongerPresent: 双子魔眼中的另一只已不存在
+			CheckedOnDropBy: 由 {0} 的 {1} 在掉落时判定
+			RandomTravelingMerchantStock: 旅商随机进货
+			AlsoRequiresUnitsOfCustomCurrency: 另需 {0} 自定义货币单位
+			DropsOnDefeatingTheLast: 击败最后一只
+			LastDropSuffix: 时掉落
+			DropsWhenTheLastOneIsDefeated: 中最后一只被击败时掉落
+			DropsWhenTheBossEncounterEndsIn: 击败首领并完成战斗时掉落
+			Separator4: " 的 "
+			EnabledIfModsLoadDuringOrIs: 加载模组时是{0}或已启用 {1} 即开启
+			CalendarEventActive: 日历活动已开启（{0}）
+			CalendarEventActiveTurnOffToStop: 日历活动已开启（{0}。关闭{1}会停用活动，在{2}启用该设置会开启活动）
+			AtLeast2: "下列条件至少满足 "
+			OfTheseConditions: " 项（"
+			IsActive: 已开启
+			DifficultyEnabled: 难度已启用
+			Used: 已使用
+			Equipped: 装备栏已装备
+			EquippedInVanitySlot: 时装栏已装备
+		}
+
 		HostOnly: 只有房主可以更改此配置。
 		HoverForHelp: 悬停查看搜索语法
 		CheatsLocked: 作弊取物已锁定，请在 JEI 房主设置中开启许可。
@@ -23,6 +423,16 @@ Mods: {
 		Configs: {
 			BrowserClientConfig: {
 				DisplayName: JEI 个人设置
+
+				CatalogColumns: {
+					Label: 物品目录列数
+					Tooltip: 右侧目录每页横向显示的格数。0 为自动，窗口较窄时会减少列数。
+				}
+
+				CatalogRows: {
+					Label: 物品目录行数
+					Tooltip: 右侧目录每页纵向显示的格数。0 为自动，窗口较矮时会减少行数。
+				}
 
 				Density: {
 					Label: 非终端列表密度

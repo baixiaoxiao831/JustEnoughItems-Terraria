@@ -12,6 +12,13 @@ public sealed class BrowserClientConfig : ModConfig
     [Range(-1, 1)]
     [DefaultValue(0)]
     public int Density;
+
+    [Range(0, 64), DefaultValue(0)]
+    public int CatalogColumns;
+
+    [Range(0, 64), DefaultValue(0)]
+    public int CatalogRows;
+
     [Range(-1, 1)]
     [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
     public int TerminalDensity;

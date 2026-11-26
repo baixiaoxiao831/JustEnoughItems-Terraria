@@ -118,8 +118,8 @@ internal static partial class DropPredicateText
                 }
                 if (!Counts(gate.A) || !names.Contains(Lang.GetNPCNameValue(npc))) continue;
                 var parts = terms.Where((t,j) => j != i).Select(t => Print(t)).ToList();
-                parts.Insert(0, names.Count == 1 ? "击败最后一只" + names[0] + "时掉落" :
-                    string.Join("、",names) + "中最后一只被击败时掉落");
+                parts.Insert(0, names.Count == 1 ? JeiText.Get("DropsOnDefeatingTheLast") + names[0] + JeiText.Get("LastDropSuffix") :
+                    string.Join(JeiText.Get("ListSeparator"),names) + JeiText.Get("DropsWhenTheLastOneIsDefeated"));
                 return string.Join("\n",parts);
             }
         } catch (Exception) { }
@@ -459,7 +459,7 @@ internal static partial class DropPredicateText
 
         private Value Call(MethodInfo method, Value owner, Value[] args)
         {
-            if (method == killGate && args is [{Op:"npc"}]) return Negate(Atom("击败首领并完成战斗时掉落"));
+            if (method == killGate && args is [{Op:"npc"}]) return Negate(Atom(JeiText.Get("DropsWhenTheBossEncounterEndsIn")));
             if (owner?.Captured is Delegate del && method.Name == "Invoke") return ReadDelegate(del,args);
             if (method.DeclaringType == typeof(string)) {
                 if (method.Name is "op_Equality" or "op_Inequality" && args.Length == 2)
@@ -474,7 +474,7 @@ internal static partial class DropPredicateText
                 return !forDifficulty && !string.IsNullOrWhiteSpace(text) ? Atom(text) : ReadDelegate(condition.Predicate,[]);
             }
             var type = method.DeclaringType;
-            if (type == typeof(NPC) && method.Name == "get_ModNPC") return new("instance","目标 NPC",A:owner,Type:method.ReturnType);
+            if (type == typeof(NPC) && method.Name == "get_ModNPC") return new("instance",JeiText.Get("TargetNPC"),A:owner,Type:method.ReturnType);
             if (type == typeof(ModNPC) && method.Name == "get_NPC") return new("npc",Type:typeof(NPC));
             if (type == typeof(ModPlayer) && method.Name == "get_Player") return new("player",Type:typeof(Player));
             if (method.IsGenericMethod && (type == typeof(Player) && method.Name == "GetModPlayer" ||
@@ -482,10 +482,10 @@ internal static partial class DropPredicateText
                 return new("instance",method.GetGenericArguments()[0].Name,A:owner,Type:method.ReturnType);
             if (method.IsGenericMethod && type == typeof(Player) && method.Name == "InModBiome") {
                 var biome = ModContent.GetContent<ModBiome>().FirstOrDefault(b => b.GetType() == method.GetGenericArguments()[0]);
-                if (biome != null) return Atom("位于" + biome.DisplayName.Value);
+                if (biome != null) return Atom(JeiText.Get("In2") + biome.DisplayName.Value);
             }
             if (type == typeof(Player) && method.Name == "InModBiome" && args is [{Captured:ModBiome registered}])
-                return Atom("位于" + registered.DisplayName.Value);
+                return Atom(JeiText.Get("In2") + registered.DisplayName.Value);
             if (type == typeof(ModContent) && method.IsGenericMethod) {
                 var entity = method.GetGenericArguments()[0];
                 if (method.Name == nameof(ModContent.NPCType)) return new("npcId",PredicateVocabulary.Npc(entity),Type:typeof(int));
@@ -524,14 +524,14 @@ internal static partial class DropPredicateText
                 args is [{Captured: Value[] parameters}] && parameters is [{Op:"string"} request, {Op:"string"} key] &&
                 request.Text is "Downed" or "GetDownedBoss" or "GetBossDowned" or "GetDifficultyActive")
                 return request.Text == "GetDifficultyActive" ? Atom(PredicateVocabulary.Difficulty(mod,key.Text)) :
-                    Atom("已击败" + PredicateVocabulary.Boss(mod.Name,key.Text));
+                    Atom(JeiText.Get("Defeated2") + PredicateVocabulary.Boss(mod.Name,key.Text));
             if (typeof(Mod).IsAssignableFrom(type) && method.Name == nameof(Mod.Call)) {
                 if (owner?.Captured is Mod api && args is [{Captured:Value[] command}] && command is [{Op:"string"} verb, ..]) {
                     if (command is [_, {Op:"npc"}] && verb.Text.StartsWith("Get",StringComparison.Ordinal) &&
                         verb.Text.EndsWith("AI",StringComparison.OrdinalIgnoreCase))
-                        return new("atom", "目标的模组 AI 状态",Type:typeof(float[]));
-                    var details = string.Join("、",command.Skip(1).Select(arg => Print(arg)));
-                    return Atom(api.DisplayName + " 的 " + verb.Text + (details.Length == 0 ? "" : "（" + details + "）"));
+                        return new("atom", JeiText.Get("TargetModAIState"),Type:typeof(float[]));
+                    var details = string.Join(JeiText.Get("ListSeparator"),command.Skip(1).Select(arg => Print(arg)));
+                    return Atom(api.DisplayName + JeiText.Get("Separator4") + verb.Text + (details.Length == 0 ? "" : JeiText.Get("OpenParen") + details + JeiText.Get("CloseParen")));
                 }
                 throw new NotSupportedException();
             }

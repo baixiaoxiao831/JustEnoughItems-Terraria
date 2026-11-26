@@ -34,8 +34,8 @@ internal static partial class PredicateVocabulary
             Code.Ldc_I4 or Code.Ldc_I4_S => Convert.ToInt32(number.Operand), _ => -1
         };
         string calendar = part.Name switch {
-            "get_Month" when date is >= 1 and <= 12 => date + "月",
-            "get_Day" when date is >= 1 and <= 31 => "每月" + date + "日", _ => null
+            "get_Month" when date is >= 1 and <= 12 => JeiText.Get("Month", date),
+            "get_Day" when date is >= 1 and <= 31 => JeiText.Get("DayOfTheMonth", date), _ => null
         };
         if (calendar == null) return null;
         // The DateTime struct returned by Now is held in a local for its getter.
@@ -49,11 +49,11 @@ internal static partial class PredicateVocabulary
             .Where(name => name != null).Distinct().ToArray();
         if (names.Length != 1) return null;
         string optionalName = ModLoader.TryGetMod(names[0],out var optionalMod) ? optionalMod.DisplayName : names[0];
-        string setup = $"加载模组时是{calendar}或已启用 {optionalName} 即开启";
+        string setup = JeiText.Get("EnabledIfModsLoadDuringOrIs", calendar, optionalName);
         var updates = mod.GetContent<ModSystem>().SelectMany(system => system.GetType().GetMethods(declared))
             .Where(hook => (hook.Name.StartsWith("PreUpdate",StringComparison.Ordinal) ||
                             hook.Name.StartsWith("PostUpdate",StringComparison.Ordinal)) && WritesField(hook,flag)).ToArray();
-        if (updates.Length == 0) return $"日历活动已开启（{setup}）";
+        if (updates.Length == 0) return JeiText.Get("CalendarEventActive", setup);
         if (updates.Length != 1) return null;
         using var update = new DynamicMethodDefinition(updates[0]);
         var writes = update.Definition.Body.Instructions.Where(i => i.OpCode.Code == Code.Stsfld && IsField(i,flag)).ToArray();
@@ -70,7 +70,7 @@ internal static partial class PredicateVocabulary
         var config = mod.Code.GetType(setting.DeclaringType.FullName.Replace('/','+'));
         string option = config == null ? null : Member(config.GetMethod(setting.Name,BindingFlags.Instance | BindingFlags.Public));
         if (option == null || worldName == null) return null;
-        return $"日历活动已开启（{setup}。关闭{option}会停用活动，在{worldName}启用该设置会开启活动）";
+        return JeiText.Get("CalendarEventActiveTurnOffToStop", setup, option, worldName);
     }
 
     private static Instruction Guard(Instruction[] stores, Code value)

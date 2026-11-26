@@ -66,12 +66,25 @@ internal static class BrowserSearch
         }
         if (!Forms.TryGetValue(name, out var forms))
             Forms[name] = forms = MakeForms(name);
-        return queryWords.All(word => Array.Exists(forms.Forms, form => form.Contains(word, StringComparison.Ordinal)) || MatchesMixed(forms.Readings, word));
+        foreach (string word in queryWords)
+        {
+            bool found = false;
+            foreach (string form in forms.Forms)
+            {
+                if (!form.Contains(word, StringComparison.Ordinal)) continue;
+                found = true;
+                break;
+            }
+            if (!found && !MatchesMixed(forms.Readings, word)) return false;
+        }
+        return true;
     }
 
     private static bool MatchesMixed(string[] parts, string word)
     {
-        if (parts.Length < 2 || word.Length < 2 || !word.All(char.IsAsciiLetterOrDigit)) return false;
+        if (parts.Length < 2 || word.Length < 2) return false;
+        foreach (char character in word)
+            if (!char.IsAsciiLetterOrDigit(character)) return false;
         Span<bool> next = word.Length <= 256 ? stackalloc bool[word.Length + 1] : new bool[word.Length + 1];
         next.Clear();
         next[word.Length] = true;

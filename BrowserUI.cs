@@ -176,6 +176,7 @@ public static partial class BrowserUI
         RememberSearch();
         recalled = -1;
         IsTyping = false;
+        suggestionQuery = null;
         PlayerInput.WritingText = false;
         Main.instance.HandleIME();
         Main.clrInput();
@@ -189,6 +190,9 @@ public static partial class BrowserUI
         cheatEnabled = false;
         closedTick = null;
         index = null;
+        suggestionCatalog = null;
+        suggestionQuery = null;
+        suggestions = [];
         view = default;
         results.Clear();
         pageRows = null;

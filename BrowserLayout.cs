@@ -14,7 +14,7 @@ namespace JustEnoughItemsTerraria;
 
 public static partial class BrowserUI
 {
-    private static readonly string[] categoryNames = { "常规合成", "微光", "生物资源", "NPC 交易", "采收", "怪物来源", "开启宝藏袋", "开启匣子", "钓鱼" };
+    private static readonly string[] categoryKeys = { "Crafting", "Shimmer2", "CreatureDrops", "NPCShops", "Harvesting", "NPCSpawns", "TreasureBags", "FishingCrates", "Fishing" };
     private static readonly List<int> pageStarts = new();
     private static readonly List<int> pageTextOffsets = new();
     private static BrowserRow[] pageRows;
@@ -136,23 +136,29 @@ public static partial class BrowserUI
         float rightTop = overview && catalogX * unit < 610 * Main.UIScale ? leftTop * panelUnit / unit : 0;
         overSide |= Box(catalogX, rightTop, catalogWidth, catalogHeight - rightTop).Contains(mouse);
         var inputRect = SearchField(catalogX, catalogWidth, catalogHeight);
+        var popup = SuggestionArea(inputRect, (int)(rightTop * unit), out int popupRow, out int popupCount);
+        Point actualMouse = mouse;
+        bool overSuggestions = popup.Contains(mouse) && !popup.IsEmpty;
+        if (overSuggestions) mouse = new Point(-10000, -10000);
         unit = panelUnit;
         if (IsOpen || overSide)
         {
             Main.LocalPlayer.mouseInterface = true;
             PlayerInput.LockVanillaMouseScroll("JustEnoughItemsTerraria");
         }
-        if (IsTyping && (leftClick || rightClick) && !inputRect.Contains(mouse)) EndTyping();
+        if (IsTyping && (leftClick || rightClick) && !overSuggestions && !inputRect.Contains(mouse)) EndTyping();
         // The owning layer is unscaled. A single point-sampled batch keeps JEI pixels crisp.
         batch.End();
         BrowserFont.BeginFrame();
+        BrowserTexturePreload.BeginDraw();
+        frameMeasurementsLeft = 12;
         batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
             DepthStencilState.None, RasterizerState.CullNone);
         if (pressedMark != null && Vector2.DistanceSquared(mouse.ToVector2(), markPressPosition.ToVector2()) >= MathF.Pow(Math.Max(4, 2 * unit), 2))
             draggingMark = true;
         DrawSide(6, sideWidth, h, true, wheelDelta, leftTop);
         if (overview)
-            Button(50, h - 26, 20, "arrow_previous_v2", "收起合成总览", () => Main.recBigList = false);
+            Button(50, h - 26, 20, "arrow_previous_v2", JeiText.Get("CloseCraftingOverview"), () => Main.recBigList = false);
         if (!Main.mouseLeft) { pressedMark = null; draggingMark = false; }
         unit = catalogUnit;
         DrawSide(catalogX, catalogWidth, catalogHeight, false, wheelDelta, rightTop);
@@ -162,6 +168,11 @@ public static partial class BrowserUI
             if (fromBackpack && view.Category == BrowserCategory.Craft) NativeRecipeMaterials.Refresh();
             DrawCenter(panelX, h);
         }
+        mouse = actualMouse;
+        unit = catalogUnit;
+        popup = SuggestionArea(inputRect, (int)(rightTop * unit), out popupRow, out popupCount);
+        DrawSuggestions(popup, popupRow, popupCount, wheelDelta);
+        unit = panelUnit;
         bool orderClick = Main.mouseMiddle && !previousMiddle;
         previousMiddle = Main.mouseMiddle;
         if (orderClick && TerminalLayout && !hovered.Npc && hovered.Id > 0 && OrderItem?.Invoke(hovered.Id) == true)
@@ -241,9 +252,17 @@ public static partial class BrowserUI
 
     private static void DrawSide(float x, float width, float h, bool left, int wheelDelta, float top)
     {
-        int pitch = BrowserPreferences.CellSize, icon = pitch - 2;
+        int cellSize = BrowserPreferences.CellSize;
+        float pitch = cellSize;
         int cols = Math.Max(1, (int)MathF.Floor(width / pitch));
-        int rows = Math.Max(1, (int)MathF.Floor((h - top - (left ? 56 : 36 + SearchHeight)) / pitch));
+        float availableHeight = h - top - (left ? 56 : 36 + SearchHeight);
+        int rows = Math.Max(1, (int)MathF.Floor(availableHeight / pitch));
+        if (!left)
+        {
+            var config = ModContent.GetInstance<BrowserClientConfig>();
+            (cols, rows, pitch) = CatalogGrid.Fit(width, availableHeight, unit, cellSize, config.CatalogColumns, config.CatalogRows);
+        }
+        float icon = Math.Max(1, Math.Min(width / cols, pitch) - 2);
         int historyRows = left && showHistory ? Math.Min(2, (recent.Count + cols - 1) / cols) : 0;
         float historyTop = h - 29 - historyRows * pitch;
         if (historyRows > 0) rows = Math.Max(0, (int)((historyTop - top - 4 - 28) / pitch));
@@ -284,7 +303,7 @@ public static partial class BrowserUI
                 Subject target = left ? mark.Value.Subject : new Subject(catalog[pos]);
                 float bx = x + i % cols * (width / cols), by = top + 28 + i / cols * pitch;
                 var cell = Box(bx, by, width / cols, pitch);
-                var art = Box(bx + (width / cols - icon) / 2, by + 1, icon, icon);
+                var art = Box(bx + (width / cols - icon) / 2, by + (pitch - icon) / 2, icon, icon);
                 if(mark is { Group: not null } grouped){
                     int hue=Convert.ToInt32(grouped.Group.Substring(2,4),16);
                     Fill(cell,Main.hslToRgb(hue/65536f,.55f,.42f)*.38f);
@@ -294,12 +313,12 @@ public static partial class BrowserUI
                     ItemImage(ItemID.WorkBench, Box(bx + width / cols - 9, by + pitch - 9, 9, 9));
                 else if (mark?.Recipe != null)
                     Icon("recipe_bookmark", Box(bx + width / cols - 7, by + pitch - 7, 7, 7));
-                string detail = mark?.Recipe == null ? "" : "\n配方书签";
+                string detail = mark?.Recipe == null ? "" : "\n" + JeiText.Get("RecipeBookmark");
                 if(mark is { Group: not null } orderMark){
                     string ratio=$"{orderMark.Have}/{orderMark.Need}";
                     Label(ratio,Box(bx,by+pitch-7,width/cols,7),7,Color.White,true,1);
-                    detail="\n待下单："+Lang.GetItemNameValue(orderMark.Product)+"\n已分配 / 需要："+ratio;
-                    if(CancelBookmarkOrder!=null)detail+="\nShift＋收藏键：取消整组材料和对应订单";
+                    detail="\n" + JeiText.Get("Order")+Lang.GetItemNameValue(orderMark.Product)+"\n" + JeiText.Get("AllocatedNeeded")+ratio;
+                    if(CancelBookmarkOrder!=null)detail+="\n" + JeiText.Get("ShiftBookmarkKeyCancelThisGroupAnd");
                 }
                 else if (mark is { } tracked && AvailableCounts != null && ((ReadOrderGroups==null && orderGoals.TryGetValue(tracked.Key,out int need)) ||
                     BrowserPreferences.Goals.TryGetValue(tracked.Key,out need)))
@@ -312,7 +331,7 @@ public static partial class BrowserUI
                     int have = available.GetValueOrDefault(target.Id);
                     string ratio = $"{have}/{need}";
                     Label(ratio, Box(bx, by + pitch - 7, width / cols, 7), 7, Color.White, true, 1);
-                    detail = "\n已有 / 需要：" + ratio;
+                    detail = "\n" + JeiText.Get("AvailableNeeded") + ratio;
                 }
                 Hit(target, cell, extra: detail, mark: mark, fromCatalog: !left);
                 if (!left && CheatActive && cell.Contains(mouse) && (leftClick || Main.mouseRight)) {
@@ -371,7 +390,7 @@ public static partial class BrowserUI
             Button(x, h - 26, 20, showMarks ? "bookmark_button_enabled" : "bookmark_button_disabled",
                 showMarks ? HideBookmarksTitle : ShowBookmarksTitle, () => { showMarks = !showMarks; markPage = 0; });
             Button(x + 22, h - 26, 20, showHistory ? "history_button_enabled" : "history_button_disabled",
-                "查询历史", () => { showHistory = !showHistory; historyScroll = 0; });
+                JeiText.Get("SearchHistory"), () => { showHistory = !showHistory; historyScroll = 0; });
         }
         else
         {
@@ -420,6 +439,11 @@ public static partial class BrowserUI
                     search = typed.Length <= 128 ? typed : typed[..128];
                     catalogPage = 0; Filter();
                 }
+                if (Main.hasFocus && Keyboard.GetState().IsKeyDown(Keys.Tab) && historyKeys.IsKeyUp(Keys.Tab))
+                {
+                    SuggestionArea(field, (int)(top * unit), out _, out int visible);
+                    CompleteNextSuggestion(visible);
+                }
                 RecallSearch();
                 if (Main.inputTextEnter || Main.inputTextEscape) EndTyping();
             }
@@ -430,8 +454,8 @@ public static partial class BrowserUI
 
     private static void Pager(float x, float y, float width, float size, string text, Action previous, Action next)
     {
-        Button(x, y, size, "arrow_previous_v2", "上一页", previous, iconSize: size * .49f);
-        Button(x + width - size, y, size, "arrow_next_v2", "下一页", next, iconSize: size * .49f);
+        Button(x, y, size, "arrow_previous_v2", JeiText.Get("PreviousPage"), previous, iconSize: size * .49f);
+        Button(x + width - size, y, size, "arrow_next_v2", JeiText.Get("NextPage"), next, iconSize: size * .49f);
         Label(text, Box(x + size, y, width - size * 2, size), Math.Min(12, size), Color.White, true,
             face: BrowserFontFace.Numbers);
     }
@@ -472,7 +496,7 @@ public static partial class BrowserUI
             }
             if (tab.Contains(mouse))
             {
-                SetPlainTooltip(categoryNames[(int)category]);
+                SetPlainTooltip(JeiText.Get(categoryKeys[(int)category]));
                 if (leftClick && !active)
                     clicked = () => NavigateWithClick(() => Select(view with { Category = category, Page = 0 }, true));
             }
@@ -480,11 +504,11 @@ public static partial class BrowserUI
         }
         var header = Box(x + 6, y + 4, width - 12, 13);
         Fill(header, new Color(161, 161, 161));
-        string direction = view.Uses ? "用途" : "来源";
-        string caption = results.Count == 0 ? direction : categoryNames[(int)view.Category];
+        string direction = view.Uses ? JeiText.Get("Uses") : JeiText.Get("Sources");
+        string caption = results.Count == 0 ? direction : JeiText.Get(categoryKeys[(int)view.Category]);
         var titleBox = Box(x + 20, y + 4, width - 40, 13);
         if (view.Category == BrowserCategory.Shimmer && results.Count > 0)
-            caption = "微光" + direction;
+            caption = JeiText.Get("Shimmer", direction);
         Label(caption, titleBox, 12, Color.White, true);
         void Switch(int delta)
         {
@@ -492,11 +516,11 @@ public static partial class BrowserUI
             int next = (Array.IndexOf(choices, view.Category) + choices.Length + delta) % choices.Length;
             Select(view with { Category = choices[next], Page = 0 }, true);
         }
-        Button(x + 6, y + 4, 13, "arrow_previous_v2", "上一分类", results.Count > 1 ? () => Switch(-1) : null, iconSize: 7);
-        Button(x + width - 19, y + 4, 13, "arrow_next_v2", "下一分类", results.Count > 1 ? () => Switch(1) : null, iconSize: 7);
+        Button(x + 6, y + 4, 13, "arrow_previous_v2", JeiText.Get("PreviousCategory"), results.Count > 1 ? () => Switch(-1) : null, iconSize: 7);
+        Button(x + width - 19, y + 4, 13, "arrow_next_v2", JeiText.Get("NextCategory"), results.Count > 1 ? () => Switch(1) : null, iconSize: 7);
         if (!results.TryGetValue(view.Category, out var items))
         {
-            Label("没有「" + Name(view.Target) + "」的" + direction + "记录", Box(x + 9, y + 24, width - 18, 18), 12, ink);
+            Label(JeiText.Get("NoFoundFor", Name(view.Target), direction), Box(x + 9, y + 24, width - 18, 18), 12, ink);
             return;
         }
         Paginate(items, height - 35 - 4);
@@ -511,9 +535,9 @@ public static partial class BrowserUI
         if (continues) end = first + 1;
         DrawStations(x, y, height, items, first, end);
         Panel("recipe_options_tab_v2", Box(x - 22, y + height - 41, 23, 41), 8, 9, flushRight: true);
-        Button(x - 17, y + height - 37, 16, "bookmarks_first", "优先显示已收藏的配方",
+        Button(x - 17, y + height - 37, 16, "bookmarks_first", JeiText.Get("ShowBookmarkedRecipesFirst"),
             () => { bookmarksFirst = !bookmarksFirst; Refresh(); }, bookmarksFirst);
-        Button(x - 17, y + height - 21, 16, "craftable_first", "按当前材料和条件重新选择可用配方",
+        Button(x - 17, y + height - 21, 16, "craftable_first", JeiText.Get("RefreshAvailableRecipesUsingCurrentMaterialsAnd"),
             () => { view = view with { Page = 0 }; Refresh(); });
         float rowY = y + 35;
         for (int i = first; i < end; i++)
@@ -567,7 +591,7 @@ public static partial class BrowserUI
                     Fill(Box(sx + 14, sy + 12, 1, 5), Color.White);
                 }
                 string extra = canExpand && area.Contains(mouse) ?
-                    $"\n双击{(expanded ? "收起" : "展开")}同类工作方块（共 {station.Items.Length} 种）" : "";
+                    "\n" + (expanded ? JeiText.Get("DoubleClickToCollapseAlternativeStations", station.Items.Length) : JeiText.Get("DoubleClickToExpandAlternativeStations", station.Items.Length)) : "";
                 Hit(new(id), area, station: true, extra: extra);
                 if (canExpand && leftClick && area.Contains(mouse))
                     clicked = () => ClickStationGroup(station.TileId, id);
@@ -577,7 +601,7 @@ public static partial class BrowserUI
                 if (!DrawStationTile(station.TileId, Box(sx + 1, sy + 1, 16, 16)))
                     Label(station.Name, area, 10, ink);
                 if (area.Contains(mouse))
-                    SetNamedTooltip(station.Name, TileLoader.GetTile(station.TileId)?.Mod.DisplayNameClean ?? "Terraria", "工作方块");
+                    SetNamedTooltip(station.Name, TileLoader.GetTile(station.TileId)?.Mod.DisplayNameClean ?? "Terraria", JeiText.Get("CraftingStation"));
             }
         }
         if (rail.Contains(mouse) && wheel != 0)

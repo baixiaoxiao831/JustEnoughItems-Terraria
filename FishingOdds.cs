@@ -26,9 +26,9 @@ internal static class FishingOdds
         int power = conditions.FinalFishingLevel;
         var lines = new List<string>();
         if (power <= 0) {
-            lines.Add("渔力 0");
-            lines.Add(conditions.BaitItemType == ItemID.TruffleWorm ? "松露虫用于召唤鱼龙公爵" :
-                conditions.PolePower <= 0 ? "需要鱼竿" : conditions.BaitPower <= 0 ? "需要鱼饵" : "当前渔力为零");
+            lines.Add(JeiText.Get("FishingPower0"));
+            lines.Add(conditions.BaitItemType == ItemID.TruffleWorm ? JeiText.Get("TruffleWormsSummonDukeFishron") :
+                conditions.PolePower <= 0 ? JeiText.Get("RequiresAFishingPole") : conditions.BaitPower <= 0 ? JeiText.Get("RequiresBait") : JeiText.Get("CurrentFishingPowerIsZero"));
             return lines.ToArray();
         }
         Projectile bobber = null;
@@ -47,12 +47,12 @@ internal static class FishingOdds
             int needed = (int)(300 * Math.Clamp(height, .25f, 1f));
             power += chum >= 3 ? 20 : chum == 2 ? 17 : chum == 1 ? 11 : 0;
             power = (int)(power * Math.Min(1f, tiles / (float)needed));
-            lines.Add($"渔力 {power} · 浮标水量 {tiles}/{needed}");
+            lines.Add(JeiText.Get("FishingPowerPondSize", power, tiles, needed));
             if (tiles < 75 || power <= 0) {
-                lines.Add("钓点水量或渔力不足 · 无法出匣");
+                lines.Add(JeiText.Get("InsufficientPondSizeOrFishingPowerTo"));
                 return lines.ToArray();
             }
-        } else lines.Add($"渔力 {power} · 按足量池水、无鱼饵桶估算");
+        } else lines.Add(JeiText.Get("FishingPowerAssumesAFullPondAnd", power));
 
         bool pearl = ModLoader.TryGetMod("CalamityMod", out var calamity) &&
             calamity.TryFind<ModPlayer>("CalamityPlayer", out var prototype) &&
@@ -60,7 +60,7 @@ internal static class FishingOdds
         double crate = player.cratePotion ? .25 : .1;
         if (pearl) {
             crate += (1 - crate) / 6;
-            lines.Add("已计入灾厄珍珠饰品效果");
+            lines.Add(JeiText.Get("IncludesTheCalamityPearlAccessoryBonus"));
         }
         // Values are conditional on entering the catch roll. Luck varies the power of each roll.
         int low = player.luck < 0 ? Math.Max(1, (int)(power * .6)) : power;
@@ -78,17 +78,17 @@ internal static class FishingOdds
         double Rare(int p) => Roll(p, pearl ? 840 : 1050, 4);
         double Uncommon(int p) => Roll(p, pearl ? 240 : 300, 3);
         double HighTier(int p) => 1 - (1 - Roll(p, pearl ? 1800 : 2250, 5)) * (1 - Roll(p, 4500, 6));
-        lines.Add($"匣子判定 {Percent(crate)} · 匣内稀有 {Range(Rare)}");
-        if (low != high) lines.Add("区间含幸运波动");
+        lines.Add(JeiText.Get("CrateRollRareRollWithinCrates", Percent(crate), Range(Rare)));
+        if (low != high) lines.Add(JeiText.Get("RangeIncludesLuckVariation"));
         int id = row.Outputs[0].ItemId;
         bool known = row.Conditions.Length >= 2;
-        if (!known) { lines.Add("此模组匣的最终判定未知"); return lines.ToArray(); }
-        bool wrongMode = (row.Conditions[0] == "困难模式") != Main.hardMode;
-        bool needsLava = row.Conditions[1].Contains("熔岩");
+        if (!known) { lines.Add(JeiText.Get("FinalCatchChanceForThisModdedCrate")); return lines.ToArray(); }
+        bool wrongMode = (row.Conditions[0] == JeiText.Get("Hardmode")) != Main.hardMode;
+        bool needsLava = row.LavaCrate;
         bool canLava = player.accLavaFishing || ItemID.Sets.CanFishInLava[conditions.PoleItemType] ||
             ItemID.Sets.IsLavaBait[conditions.BaitItemType];
         if (wrongMode || (needsLava && !canLava) || (measured && (needsLava != lava || honey && !lava && !Main.notTheBeesWorld))) {
-            lines.Add("此匣 0% · " + (wrongMode ? "世界阶段不符" : needsLava && !canLava ? "缺少熔岩垂钓能力" : "浮标液体不符"));
+            lines.Add(JeiText.Get("ThisCrate0") + (wrongMode ? JeiText.Get("WrongWorldProgression") : needsLava && !canLava ? JeiText.Get("LavaFishingAbilityRequired") : JeiText.Get("BobberIsInTheWrongLiquid")));
             return lines.ToArray();
         }
         // The rare roll checks these habitats in game order. Special seeds can relax a check.
@@ -120,8 +120,8 @@ internal static class FishingOdds
             ItemID.LavaCrate or ItemID.LavaCrateHard => Percent(crate / 6),
             _ => Range(p => crate * Rare(p) * (id < ItemID.Count ? habitat : 1))
         };
-        lines.Add((id < ItemID.Count ? "当前环境目标判定 " : "满足下列群落时 ") + rate);
-        lines.Add("每次进入物品分支计，未扣垃圾、敌怪和模组截获。");
+        lines.Add((id < ItemID.Count ? JeiText.Get("ChanceInThisEnvironment") : JeiText.Get("ChanceInTheListedBiome")) + rate);
+        lines.Add(JeiText.Get("PerItemRollBeforeJunkEnemiesAnd"));
         return lines.ToArray();
     }
 }

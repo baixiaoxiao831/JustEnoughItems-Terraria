@@ -26,8 +26,8 @@ internal static partial class PredicateVocabulary
         var names = Registries.GetValue(owner, mod => new RegistryNames(mod));
         string normalized = Normalize(key);
         string eventName = names.Direct(normalized);
-        if (eventName != null) return eventName + "已开启";
-        return (names.Mode(normalized) ?? key) + "难度已启用";
+        if (eventName != null) return eventName + JeiText.Get("IsActive");
+        return (names.Mode(normalized) ?? key) + JeiText.Get("DifficultyEnabled");
     }
 
     // Link the guard back to a registered item that writes this exact field. Static
@@ -56,11 +56,11 @@ internal static partial class PredicateVocabulary
                 f.DeclaringType.FullName == field.DeclaringType.FullName.Replace('+','/') && f.Name == field.Name);
             if (writes)
             {
-                string action = hook switch { "UseItem" => "已使用", "UpdateAccessory" => "装备栏已装备", _ => "时装栏已装备" };
+                string action = hook switch { "UseItem" => JeiText.Get("Used"), "UpdateAccessory" => JeiText.Get("Equipped"), _ => JeiText.Get("EquippedInVanitySlot") };
                 matches.Add(action + "「" + item.DisplayName.Value + "」");
             }
         }
-        return matches.Count > 0 ? string.Join("或", matches.Order()) : null;
+        return matches.Count > 0 ? string.Join(JeiText.Get("Or"), matches.Order()) : null;
     }
 
     private sealed class RegistryNames
@@ -112,9 +112,9 @@ internal static partial class PredicateVocabulary
             if (!modeFlags.TryGetValue(key,out var names)) return null;
             foreach (string alias in names) {
                 string ev = Unique(groups,alias);
-                if (ev != null) return ev + "已开启";
+                if (ev != null) return ev + JeiText.Get("IsActive");
                 string mode = Mode(alias);
-                if (mode != null) return mode + "难度已启用";
+                if (mode != null) return mode + JeiText.Get("DifficultyEnabled");
             }
             return null;
         }
@@ -129,7 +129,7 @@ internal static partial class PredicateVocabulary
             {
                 var first = Direct(Normalize(joint[0]));
                 var second = Direct(Normalize(joint[1]));
-                if (first != null && second != null) return first + "与" + second;
+                if (first != null && second != null) return first + JeiText.Get("And2") + second;
             }
             if (!aliases.Value.TryGetValue(key,out var alternatives)) return null;
             // Prefer the registered name of an encounter over the names of its constituent NPCs.

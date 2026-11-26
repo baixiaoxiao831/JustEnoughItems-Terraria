@@ -21,10 +21,10 @@ public sealed partial class BrowserIndex
         [ItemID.BottomlessBucket] = ItemID.BottomlessShimmerBucket, [ItemID.BottomlessShimmerBucket] = ItemID.BottomlessBucket
     };
     private static readonly (MoonPhase Phase, int Item, string Name)[] MoonOutcomes = {
-        (MoonPhase.Full, ItemID.HeavenforgeBrick, "满月"), (MoonPhase.ThreeQuartersAtRight, ItemID.CosmicEmberBrick, "右侧四分之三亮"),
-        (MoonPhase.HalfAtRight, ItemID.CryocoreBrick, "右半月"), (MoonPhase.QuarterAtRight, ItemID.StarRoyaleBrick, "右侧四分之一亮"),
-        (MoonPhase.Empty, ItemID.MercuryBrick, "新月"), (MoonPhase.QuarterAtLeft, ItemID.DarkCelestialBrick, "左侧四分之一亮"),
-        (MoonPhase.HalfAtLeft, ItemID.AstraBrick, "左半月"), (MoonPhase.ThreeQuartersAtLeft, ItemID.LunarRustBrick, "左侧四分之三亮")
+        (MoonPhase.Full, ItemID.HeavenforgeBrick, "FullMoon"), (MoonPhase.ThreeQuartersAtRight, ItemID.CosmicEmberBrick, "WaningGibbous"),
+        (MoonPhase.HalfAtRight, ItemID.CryocoreBrick, "ThirdQuarter"), (MoonPhase.QuarterAtRight, ItemID.StarRoyaleBrick, "WaningCrescent"),
+        (MoonPhase.Empty, ItemID.MercuryBrick, "NewMoon"), (MoonPhase.QuarterAtLeft, ItemID.DarkCelestialBrick, "WaxingCrescent"),
+        (MoonPhase.HalfAtLeft, ItemID.AstraBrick, "FirstQuarter"), (MoonPhase.ThreeQuartersAtLeft, ItemID.LunarRustBrick, "WaxingGibbous")
     };
     private static readonly PropertyInfo ConsumeHooks = typeof(Recipe).GetProperty(
         "ConsumeIngredientHooks", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
@@ -54,11 +54,11 @@ public sealed partial class BrowserIndex
         foreach (int i in candidates)
         {
             var candidate = Main.recipe[i];
-            string gates = Join(candidate.ContainsIngredient(ItemID.Bone) ? "击败骷髅王后" : null,
-                candidate.ContainsIngredient(ItemID.LihzahrdBrick) ? "击败石巨人后" : null);
+            string gates = Join(candidate.ContainsIngredient(ItemID.Bone) ? JeiText.Get("AfterDefeatingSkeletron") : null,
+                candidate.ContainsIngredient(ItemID.LihzahrdBrick) ? JeiText.Get("AfterDefeatingGolem") : null);
             if (gates.Length > 0)
             {
-                progress = candidate.DecraftConditions.Count > 0 ? "受当前拆解配方的首领进度限制" : gates;
+                progress = candidate.DecraftConditions.Count > 0 ? JeiText.Get("SubjectToThisDecraftingRecipeSBoss") : gates;
                 break;
             }
             if (candidate.DecraftConditions.Count == 0) break;
@@ -77,37 +77,37 @@ public sealed partial class BrowserIndex
         }
         if (ItemID.Sets.CoinLuckValue[equiv] > 0)
         {
-            Transform("coin", 0, "增加投币幸运值 " + ItemID.Sets.CoinLuckValue[equiv]);
+            Transform("coin", 0, JeiText.Get("CoinLuckGained") + ItemID.Sets.CoinLuckValue[equiv]);
             return;
         }
         bool moonOverride = MoonLordTransforms.TryGetValue(equiv, out int moonTarget);
         if (moonOverride)
-            Transform("moonlord", moonTarget, "微光转换 · 击败月亮领主后", () => NPC.downedMoonlord);
-        string beforeMoonLord = moonOverride ? "击败月亮领主前" : null;
+            Transform("moonlord", moonTarget, JeiText.Get("ShimmerTransformationAfterDefeatingMoonLord"), () => NPC.downedMoonlord);
+        string beforeMoonLord = moonOverride ? JeiText.Get("BeforeDefeatingMoonLord") : null;
         if (equiv == ItemID.LunarBrick)
         {
             foreach (var outcome in MoonOutcomes)
-                Transform("moon", outcome.Item, "微光转换 · " + outcome.Name, () => Main.GetMoonPhase() == outcome.Phase);
+                Transform("moon", outcome.Item, JeiText.Get("ShimmerTransformation2") + JeiText.Get(outcome.Name), () => Main.GetMoonPhase() == outcome.Phase);
             return;
         }
         if (item.createTile == TileID.MusicBoxes)
         {
-            if (id != ItemID.MusicBox) Transform("music", ItemID.MusicBox, "恢复为空八音盒");
+            if (id != ItemID.MusicBox) Transform("music", ItemID.MusicBox, JeiText.Get("RevertsToAnEmptyMusicBox"));
             return;
         }
         int target = ItemID.Sets.ShimmerTransformToItem[equiv];
         if (target > 0)
         {
             if (target != id && (!moonOverride || target != moonTarget))
-                Transform("item", target, Join("微光转换", beforeMoonLord), () => !moonOverride || !NPC.downedMoonlord);
+                Transform("item", target, Join(JeiText.Get("ShimmerTransformation"), beforeMoonLord), () => !moonOverride || !NPC.downedMoonlord);
             // Mods can register the same conversion as the vanilla post-Moon Lord override.
             if (target != id && moonOverride && target == moonTarget)
-                Transform("item", target, "微光转换 · 击败月亮领主前", () => !NPC.downedMoonlord);
+                Transform("item", target, JeiText.Get("ShimmerTransformationBeforeDefeatingMoonLord"), () => !NPC.downedMoonlord);
             return;
         }
         if (id == ItemID.GelBalloon)
         {
-            Transform("slime", 0, "尚未解锁时释放闪耀史莱姆", () => !NPC.unlockedSlimeRainbowSpawn, NPCID.TownSlimeRainbow);
+            Transform("slime", 0, JeiText.Get("ReleasesTheDivaSlimeIfStillLocked"), () => !NPC.unlockedSlimeRainbowSpawn, NPCID.TownSlimeRainbow);
             return;
         }
         if (item.makeNPC > 0 && item.makeNPC < NPCID.Sets.ShimmerTransformToNPC.Length)
@@ -115,7 +115,7 @@ public sealed partial class BrowserIndex
             int spawn = NPCID.Sets.ShimmerTransformToNPC[item.makeNPC];
             if (spawn < 0) spawn = item.makeNPC;
             if (npcIds.Contains(spawn))
-                Transform("npc|" + BrowserKeys.NpcKey(spawn), 0, "释放生物 · " + Lang.GetNPCNameValue(spawn), null, spawn);
+                Transform("npc|" + BrowserKeys.NpcKey(spawn), 0, JeiText.Get("ReleasesCreature") + Lang.GetNPCNameValue(spawn), null, spawn);
             return;
         }
         bool fallback = false;
@@ -126,8 +126,8 @@ public sealed partial class BrowserIndex
             if (products.Count > 0 && products.All(ValidStack))
             {
                 var conditions = recipe.DecraftConditions.Select(Describe).ToList();
-                if (recipe.ContainsIngredient(ItemID.Bone)) conditions.Add("击败骷髅王后");
-                if (recipe.ContainsIngredient(ItemID.LihzahrdBrick)) conditions.Add("击败石巨人后");
+                if (recipe.ContainsIngredient(ItemID.Bone)) conditions.Add(JeiText.Get("AfterDefeatingSkeletron"));
+                if (recipe.ContainsIngredient(ItemID.LihzahrdBrick)) conditions.Add(JeiText.Get("AfterDefeatingGolem"));
                 var handlers = (ConsumeHooks?.GetValue(recipe) as Delegate)?.GetInvocationList() ?? Array.Empty<Delegate>();
                 bool alchemy = handlers.Contains(Recipe.IngredientQuantityRules.Alchemy);
                 bool dynamicAmount = handlers.Any(h => !h.Equals(Recipe.IngredientQuantityRules.Alchemy));
@@ -135,8 +135,8 @@ public sealed partial class BrowserIndex
                     Category = BrowserCategory.Shimmer, IsDecraft = true, Inputs = new[] { BrowserSlot.Of(id, recipe.createItem.stack) },
                     Outputs = products.Select(x => BrowserSlot.Of(x.type, x.stack)).ToArray(),
                     Conditions = conditions.ToArray(),
-                    Note = Join("微光拆解", beforeMoonLord, fallback ? "较高优先级拆解条件未满足时" : null,
-                        alchemy ? "每份材料有 1/3 概率不返还" : null, dynamicAmount ? "数量为登记值，模组可动态调整" : null),
+                    Note = Join(JeiText.Get("ShimmerDecrafting"), beforeMoonLord, fallback ? JeiText.Get("WhenHigherPriorityDecraftingConditionsAreUnmet") : null,
+                        alchemy ? JeiText.Get("EachIngredientHasA13Chance") : null, dynamicAmount ? JeiText.Get("RegisteredQuantitiesShownModsMayAdjustThem") : null),
                     PreferredNow = () => (!moonOverride || !NPC.downedMoonlord) && ActiveDecraft() == index && !IsBossLocked(recipe)
                 }, recipe.createItem.type);
             }
@@ -181,13 +181,13 @@ public sealed partial class BrowserIndex
                         Category = BrowserCategory.Drop, Npc = npc,
                         Inputs = bag.HasValue ? new[] { BrowserSlot.Of(bag.Value) } : Array.Empty<BrowserSlot>(),
                         Outputs = new[] { new BrowserSlot(drop.itemId, count, new[] { drop.itemId }) },
-                        Note = Join(npc.HasValue ? null : bag is int container ? (ItemID.Sets.BossBag[container] ? "开启宝藏袋" : ItemID.Sets.IsFishingCrate[container] ? "开启匣子" : "开启容器") : "全局条件掉落", "基础掉率 " + percent),
+                        Note = Join(npc.HasValue ? null : bag is int container ? (ItemID.Sets.BossBag[container] ? JeiText.Get("TreasureBags") : ItemID.Sets.IsFishingCrate[container] ? JeiText.Get("FishingCrates") : JeiText.Get("OpenContainer")) : JeiText.Get("GlobalConditionalDrop"), JeiText.Get("BaseDropRate") + percent),
                         Difficulties = conditions.Aggregate(LootDifficulty.All, (mask, condition) => mask & DifficultyFor(condition)),
                         Conditions = conditions.Select(c => {
                             string label = DropConditionText(c);
-                            if (npc.HasValue && label.Contains("AI 状态"))
+                            if (npc.HasValue && label.Contains(JeiText.Get("AIState")))
                                 return DropPredicateText.EncounterKillDescription(c,npc.Value) ?? label;
-                            return npc.HasValue && label.Contains("在场") ? DropPredicateText.KillDescription(c,npc.Value) ?? label : label;
+                            return npc.HasValue && label.Contains(JeiText.Get("Present")) ? DropPredicateText.KillDescription(c,npc.Value) ?? label : label;
                         }).Distinct().ToArray()
                     });
                 }
@@ -216,9 +216,9 @@ public sealed partial class BrowserIndex
     private string ReadDropCondition(IItemDropRuleCondition condition)
     {
         if (condition is BrowserDropReport.Negated negated)
-            return DropPredicateText.Describe(negated.Inner, true) ?? "未满足（" + DropConditionText(negated.Inner) + "）";
+            return DropPredicateText.Describe(negated.Inner, true) ?? JeiText.Get("UnmetCondition2") + DropConditionText(negated.Inner) + "）";
         if (PredicateVocabulary.Vanilla(condition) is string vanilla) return vanilla;
-        if (condition is Conditions.IsExpert) return "专家模式";
+        if (condition is Conditions.IsExpert) return JeiText.Get("ExpertMode");
         try
         {
             string text = condition.GetConditionDescription();
@@ -226,22 +226,22 @@ public sealed partial class BrowserIndex
         }
         catch (Exception e) { ReportIssue("掉落条件", e); }
         return condition.GetType().FullName switch {
-            "Terraria.GameContent.ItemDropRules.Conditions+NotExpert" => "经典模式",
-            "Terraria.GameContent.ItemDropRules.Conditions+NotMasterMode" => "非大师模式",
-            "Terraria.GameContent.ItemDropRules.Conditions+NotFromStatue" => "非雕像生成",
-            "Terraria.GameContent.ItemDropRules.Conditions+IsHardmode" => "困难模式",
-            "Terraria.GameContent.ItemDropRules.Conditions+DownedPlantera" => "击败世纪之花后",
-            "Terraria.GameContent.ItemDropRules.Conditions+RemixSeed" => "颠倒世界",
-            "Terraria.GameContent.ItemDropRules.Conditions+NotRemixSeed" => "非颠倒世界",
-            "Terraria.GameContent.ItemDropRules.Conditions+DontStarveIsUp" => "饥荒联动世界",
-            "Terraria.GameContent.ItemDropRules.Conditions+DontStarveIsNotUp" => "非饥荒联动世界",
-            "Terraria.GameContent.ItemDropRules.Conditions+RemixSeedHardmode" => "颠倒世界 · 困难模式",
-            "Terraria.GameContent.ItemDropRules.Conditions+RemixSeedEasymode" => "颠倒世界 · 困难模式前",
-            "Terraria.GameContent.ItemDropRules.Conditions+LegacyHack_IsABoss" => "目标为首领",
-            "Terraria.GameContent.ItemDropRules.Conditions+LegacyHack_IsBossAndNotExpert" => "经典模式 · 目标为首领",
-            "Terraria.GameContent.ItemDropRules.Conditions+MissingTwin" => "双子魔眼中的另一只已不存在",
+            "Terraria.GameContent.ItemDropRules.Conditions+NotExpert" => JeiText.Get("ClassicMode"),
+            "Terraria.GameContent.ItemDropRules.Conditions+NotMasterMode" => JeiText.Get("OutsideMasterMode"),
+            "Terraria.GameContent.ItemDropRules.Conditions+NotFromStatue" => JeiText.Get("NotSpawnedByAStatue"),
+            "Terraria.GameContent.ItemDropRules.Conditions+IsHardmode" => JeiText.Get("Hardmode"),
+            "Terraria.GameContent.ItemDropRules.Conditions+DownedPlantera" => JeiText.Get("AfterDefeatingPlantera"),
+            "Terraria.GameContent.ItemDropRules.Conditions+RemixSeed" => JeiText.Get("RemixWorld"),
+            "Terraria.GameContent.ItemDropRules.Conditions+NotRemixSeed" => JeiText.Get("OutsideARemixWorld"),
+            "Terraria.GameContent.ItemDropRules.Conditions+DontStarveIsUp" => JeiText.Get("TheConstantWorld"),
+            "Terraria.GameContent.ItemDropRules.Conditions+DontStarveIsNotUp" => JeiText.Get("OutsideTheConstant"),
+            "Terraria.GameContent.ItemDropRules.Conditions+RemixSeedHardmode" => JeiText.Get("RemixWorldHardmode"),
+            "Terraria.GameContent.ItemDropRules.Conditions+RemixSeedEasymode" => JeiText.Get("RemixWorldPreHardmode"),
+            "Terraria.GameContent.ItemDropRules.Conditions+LegacyHack_IsABoss" => JeiText.Get("TargetIsABoss"),
+            "Terraria.GameContent.ItemDropRules.Conditions+LegacyHack_IsBossAndNotExpert" => JeiText.Get("ClassicModeTargetIsABoss"),
+            "Terraria.GameContent.ItemDropRules.Conditions+MissingTwin" => JeiText.Get("TheOtherTwinIsNoLongerPresent"),
             _ => DropLabels.GetValueOrDefault(condition.GetType().Name) ?? DropPredicateText.Describe(condition)
-                ?? $"由 {condition.GetType().Assembly.GetName().Name} 的 {condition.GetType().Name} 在掉落时判定"
+                ?? JeiText.Get("CheckedOnDropBy", condition.GetType().Assembly.GetName().Name, condition.GetType().Name)
         };
     }
 
@@ -299,8 +299,8 @@ public sealed partial class BrowserIndex
                 PaymentTypes = price > 0 ? units.Keys.ToArray() : Array.Empty<int>(),
                 Outputs = new[] { BrowserSlot.Of(item.type, item.stack) },
                 Conditions = conditions.Select(Describe).Distinct().ToArray(),
-                Note = Join(price == 0 ? "免费" : "基础价", traveller ? "旅商随机进货" : null,
-                    remaining > 0 ? $"另需 {remaining} 自定义货币单位" : null),
+                Note = Join(price == 0 ? JeiText.Get("Free") : JeiText.Get("BasePrice"), traveller ? JeiText.Get("RandomTravelingMerchantStock") : null,
+                    remaining > 0 ? JeiText.Get("AlsoRequiresUnitsOfCustomCurrency", remaining) : null),
                 PreferredNow = () => conditions.All(c => c.IsMet()) && (!traveller || Main.travelShop.Contains(item.type))
             });
         }

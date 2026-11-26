@@ -76,8 +76,8 @@ internal static partial class DropPredicateText
 
     private static string Format(Value v)
     {
-        if (Is(v,0)) return "条件恒不成立";
-        if (Is(v,1)) return "无额外限制";
+        if (Is(v,0)) return JeiText.Get("ConditionIsNeverMet");
+        if (Is(v,1)) return JeiText.Get("NoAdditionalRequirement");
         return Print(Simplify(v));
     }
 
@@ -114,7 +114,7 @@ internal static partial class DropPredicateText
             trackedNpcs[mod] = fields;
         }
         return fields.TryGetValue(slot,out var candidates) && candidates.Count == 1 ?
-            "未记录到在场的" + candidates.First() : null;
+            JeiText.Get("NoActiveInstanceRecordedFor") + candidates.First() : null;
     }
 
     private static string Print(Value v, int parent = 0)
@@ -123,37 +123,38 @@ internal static partial class DropPredicateText
         switch (v.Op) {
             case "atom": case "npcId": case "itemId": case "number": case "string": return v.Text;
             case "instance": return v.Text;
-            case "typed": return Part(v.A) + "（" + v.Text + "）";
-            case "null": return "空";
-            case "npc": return "掉落目标";
-            case "player": return "玩家";
-            case "captured" when v.Captured is NPC: return "掉落目标";
-            case "captured" when v.Captured is Player: return "玩家";
+            case "typed": return Part(v.A) + JeiText.Get("OpenParen") + v.Text + JeiText.Get("CloseParen");
+            case "null": return JeiText.Get("Null");
+            case "npc": return JeiText.Get("DropTarget");
+            case "player": return JeiText.Get("Player");
+            case "captured" when v.Captured is NPC: return JeiText.Get("DropTarget");
+            case "captured" when v.Captured is Player: return JeiText.Get("Player");
             case "captured" when v.Captured is Mod mod: return mod.DisplayName;
             case "member": {
                 var member = (MemberInfo)v.Captured;
                 string label = Label(member);
-                if (label != null && v.A?.Op == "index") return Part(v.A) + "的" + label;
+                if (label != null && v.A?.Op == "index") return Part(v.A) + JeiText.Get("S") + label;
                 if (label != null) return label;
-                if (v.A?.Op is "npc" or "player") return Part(v.A) + "的 " + v.Text;
+                if (v.A?.Op is "npc" or "player") return Part(v.A) + JeiText.Get("S2") + v.Text;
                 return member.DeclaringType.Name + "." + v.Text;
             }
             case "index": {
                 bool ai = v.A.Captured is FieldInfo field && field.FieldType == typeof(float[]) &&
                     (field.DeclaringType == typeof(NPC) || typeof(GlobalNPC).IsAssignableFrom(field.DeclaringType)) &&
                     field.Name.EndsWith("AI",StringComparison.OrdinalIgnoreCase);
-                if ((ai || v.A.Text == "目标的模组 AI 状态") && v.B.Op == "number" && int.TryParse(v.B.Text,out int slot))
-                    return (v.A.Captured is FieldInfo {DeclaringType:var t} && t == typeof(NPC) ? "目标 AI" : "目标的模组 AI") +
-                        " 状态第 " + (slot + 1) + " 项";
+                if ((ai || v.A.Text == JeiText.Get("TargetModAIState")) && v.B.Op == "number" && int.TryParse(v.B.Text,out int slot))
+                    return (v.A.Captured is FieldInfo {DeclaringType:var t} && t == typeof(NPC) ? JeiText.Get("TargetAI") : JeiText.Get("TargetModAI")) +
+                        JeiText.Get("StateSlot") + (slot + 1) + JeiText.Get("SlotSuffix");
                 return Part(v.A) + "[" + Part(v.B) + "]";
             }
-            case "lower": return Part(v.A) + "（转为小写）";
-            case "contains": return Part(v.A) + "含有「" + Part(v.B) + "」";
-            case "choice": return "（若" + Part(v.A) + "，取" + Part(v.B.A) + "，否则取" + Part(v.B.B) + "）";
-            case "countNpcs": return "在场的" + Part(v.A) + "数量";
-            case "anyNpc": return Part(v.A) + "在场";
+            case "lower": return Part(v.A) + JeiText.Get("Lowercase");
+            case "contains": return Part(v.A) + JeiText.Get("Contains") + Part(v.B) + JeiText.Get("CloseQuote");
+            case "choice": return JeiText.Get("If") + Part(v.A) + JeiText.Get("Then") + Part(v.B.A) + JeiText.Get("Else") + Part(v.B.B) + JeiText.Get("CloseParen");
+            case "countNpcs": return JeiText.Get("Active") + Part(v.A) + JeiText.Get("Count");
+            case "anyNpc": return Part(v.A) + JeiText.Get("Present");
             case "!": {
                 var a = Part(v.A,4);
+                if (!JeiText.Chinese) return JeiText.Get("RequiresTheFollowingToBeFalse", a);
                 if (a == "雕像生成") return "非雕像生成";
                 if (a is "困难模式" or "已进入困难模式") return "困难模式前";
                 if (a == "颠倒世界" || a == "大师模式" || a == "专家模式") return "非" + a;
@@ -177,27 +178,27 @@ internal static partial class DropPredicateText
                     }
                     CollectChoices(v);
                     if (tests.Count >= 2 && tests.All(x => x.Op == "=" && x.A == tests[0].A && x.B.Op == "string"))
-                        return Part(tests[0].A) + "为" + string.Join("、",tests.Select(x => "「" + x.B.Text + "」")) + "之一";
+                        return Part(tests[0].A) + JeiText.Get("Is") + string.Join(JeiText.Get("ListSeparator"),tests.Select(x => JeiText.Get("OpenQuote") + x.B.Text + JeiText.Get("CloseQuote"))) + JeiText.Get("AnyListedValue");
                 }
                 int p = and ? 2 : 1;
-                string text = Part(v.A,p) + (and ? "且" : "或") + Part(v.B,p);
-                return p < parent ? "（" + text + "）" : text;
+                string text = Part(v.A,p) + (and ? JeiText.Get("And") : JeiText.Get("Or")) + Part(v.B,p);
+                return p < parent ? JeiText.Get("OpenParen") + text + JeiText.Get("CloseParen") : text;
             }
             case "=": case "!=": case "<": case ">": case ">=": case "<=": {
                 if (v.A.Captured is FieldInfo {DeclaringType:var t,Name:nameof(Main.netMode)} && t == typeof(Main) &&
                     v.Op is "=" or "!=" && v.B.Op == "number") {
                     bool equal = v.Op == "=";
                     var mode = (v.B.Text,equal) switch {
-                        ("0",true) => "单人模式", ("0",false) => "多人模式",
-                        ("1",true) => "多人客户端", ("1",false) => "单人或多人服务器端",
-                        ("2",true) => "多人服务器端", ("2",false) => "单人或多人客户端", _ => null
+                        ("0",true) => JeiText.Get("SinglePlayer"), ("0",false) => JeiText.Get("Multiplayer"),
+                        ("1",true) => JeiText.Get("MultiplayerClient"), ("1",false) => JeiText.Get("SinglePlayerOrMultiplayerServer"),
+                        ("2",true) => JeiText.Get("MultiplayerServer"), ("2",false) => JeiText.Get("SinglePlayerOrMultiplayerClient"), _ => null
                     };
                     if (mode != null) return mode;
                 }
                 if (v.A.Op == "+" && v.A.A.Op == "countNpcs" && v.A.B.Op == "countNpcs" &&
                     v.Op == "<=" && Is(v.B,1))
-                    return Part(v.A.A.A) + "与" + Part(v.A.B.A) + "的在场总数不超过 1";
-                string right = v.B.Op == "string" ? "「" + Part(v.B) + "」" : Part(v.B);
+                    return Part(v.A.A.A) + JeiText.Get("And2") + Part(v.A.B.A) + JeiText.Get("HaveACombinedActiveCountOfAt");
+                string right = v.B.Op == "string" ? JeiText.Get("OpenQuote") + Part(v.B) + JeiText.Get("CloseQuote") : Part(v.B);
                 var mi = v.A.Captured as MemberInfo;
                 if (mi?.DeclaringType == typeof(WorldGen.SavedOreTiers) && v.B.Op == "number" &&
                     int.TryParse(v.B.Text,out int tile) && tile >= 0 && tile < TileLoader.TileCount) {
@@ -207,11 +208,11 @@ internal static partial class DropPredicateText
                 if (mi?.DeclaringType == typeof(NPC) && mi.Name == "type" && v.B.Op == "number" &&
                     int.TryParse(v.B.Text,out int npc) && ContentSamples.NpcsByNetId.ContainsKey(npc))
                     right = Lang.GetNPCNameValue(npc);
-                string comparison = v.Op switch {"=" => "为","!=" => "不为","<" => "小于",">" => "大于",
-                    "<=" => "不超过",">=" => "至少为",_ => throw new NotSupportedException()};
+                string comparison = v.Op switch {"=" => JeiText.Get("Is"),"!=" => JeiText.Get("IsNot"),"<" => JeiText.Get("LessThan"),">" => JeiText.Get("GreaterThan"),
+                    "<=" => JeiText.Get("AtMost"),">=" => JeiText.Get("AtLeast"),_ => throw new NotSupportedException()};
                 return Part(v.A,3) + comparison + right;
             }
-            case "+": case "-": case "*": case "/": case "%": return "（" + Part(v.A) + " " + v.Op + " " + Part(v.B) + "）";
+            case "+": case "-": case "*": case "/": case "%": return JeiText.Get("OpenParen") + Part(v.A) + " " + v.Op + " " + Part(v.B) + JeiText.Get("CloseParen");
             default: throw new NotSupportedException();
         }
     }

@@ -1,5 +1,405 @@
 Mods: {
 	JustEnoughItemsTerraria: {
+		Browser: {
+			NoFoundFor: No {1} found for {0}
+			Shimmer: Shimmer {0}
+			DoubleClickToCollapseAlternativeStations: Double-click to collapse {0} alternative stations
+			DoubleClickToExpandAlternativeStations: Double-click to expand {0} alternative stations
+			BaseDropRate: "Base drop rate "
+			Month: month {0}
+			DayOfTheMonth: day {0} of the month
+			RequiresTheFollowingToBeFalse: Requires the following to be false: {0}
+			PreHardmode: Pre-Hardmode
+			WaterCommonCrateRollAfterHigherPriority: Water. Common crate roll after higher-priority crates miss.
+			Hardmode: Hardmode
+			WaterUncommonRollAfterHigherPriorityCrates: Water. Uncommon roll after higher-priority crates miss.
+			WaterVeryRareOrLegendaryRollAfter: Water. Very rare or legendary roll after biome crates miss.
+			DungeonWaterAfterSkeletronRequiresARare: Dungeon water after Skeletron. Requires a rare roll.
+			CorruptionWaterRequiresARareRoll: Corruption water. Requires a rare roll.
+			CrimsonWaterRequiresARareRoll: Crimson water. Requires a rare roll.
+			SpaceWaterRequiresARareRoll: Space water. Requires a rare roll.
+			HallowWaterRequiresARareRoll: Hallow water. Requires a rare roll.
+			JungleWaterRequiresARareRoll: Jungle water. Requires a rare roll.
+			SnowWaterRequiresARareRoll: Snow water. Requires a rare roll.
+			DesertWaterRequiresARareRoll: Desert water. Requires a rare roll.
+			OceanWaterOrUndergroundWaterAtThe: Ocean water, or underground water at the required depth in Remix worlds. Requires a rare roll.
+			LavaRequiresLavaFishingAndA1: Lava. Requires lava fishing and a 1 in 6 roll after the crate roll.
+			AstralInfectionWaterRequiresBothCrateAnd: Astral Infection water. Requires both crate and rare rolls.
+			SunkenSeaWaterRequiresBothCrateAnd: Sunken Sea water. Requires both crate and rare rolls.
+			WaterInTheSulphurousSeaAbyssOr: Water in the Sulphurous Sea, Abyss, or within 380 tiles of the Abyss-side edge. Requires both crate and rare rolls.
+			BrimstoneCragLavaRequiresLavaFishingA: Brimstone Crag lava. Requires lava fishing, a crate roll and a rare roll.
+			NormalOrHallowedGrass: Normal or Hallowed grass
+			MatureNotBlooming: Mature, not blooming
+			Nighttime: Nighttime
+			Blooming: Blooming
+			Daytime: Daytime
+			JungleGrass: Jungle grass
+			BareDirtOrMud: Bare dirt or mud
+			WhileThePlantIsNotGlowing: While the plant is not glowing
+			WhileThePlantIsGlowing: While the plant is glowing
+			CorruptOrCrimsonGrassOrStone: Corrupt or Crimson grass or stone
+			ExceptOnBloodMoonOrFullMoon: Except on Blood Moon or full moon nights
+			OnABloodMoonOrFullMoon: On a Blood Moon or full moon night
+			InlandSandOrPearlsand: Inland sand or pearlsand
+			NoRainOrRainClouds: No rain or rain clouds
+			DuringRainOrUnderRainClouds: During rain or under rain clouds
+			AshBlocksOrAshGrass: Ash blocks or Ash grass
+			DuringRainOrOutsideBloomingHours: During rain or outside blooming hours
+			DryWeatherAfter345PMUntil: Dry weather, after 3:45 PM until 7:30 PM
+			SnowOrIceBlocksIncludingInfectedVariants: Snow or ice blocks, including infected variants
+			RemainsOpenAfterBlooming: Remains open after blooming
+			UndergroundDirtStoneMudOrJungleGrass: Underground dirt, stone, mud or Jungle grass
+			Wild: Wild
+			SurfaceGrassOrHallowedGrassWithNo: Surface grass or Hallowed grass with no background wall
+			SurfaceGrassHallowedGrassOrJungleGrass: Surface grass, Hallowed grass or Jungle grass with no background wall
+			BottomOfUndergroundPools: Bottom of underground pools
+			TopOfACactus: Top of a cactus
+			UndersideOfUndergroundDirtBlocks: Underside of underground dirt blocks
+			GrassMossOrDirt: Grass, moss or dirt
+			GrowsOnlyInHardmode: Grows only in Hardmode
+			ConditionIsNeverMet: Condition is never met
+			NoAdditionalRequirement: No additional requirement
+			NoActiveInstanceRecordedFor: "No active instance recorded for "
+			OpenParen: (
+			CloseParen: )
+			Null: "null"
+			DropTarget: Drop target
+			Player: Player
+			S: "'s "
+			S2: "'s "
+			TargetModAIState: Target mod AI state
+			TargetAI: Target AI
+			TargetModAI: Target mod AI
+			StateSlot: " state slot "
+			SlotSuffix: ""
+			Lowercase: " (lowercase)"
+			Contains: " contains “"
+			CloseQuote: ”
+			If: "(if "
+			Then: " then "
+			Else: " else "
+			Active: "Active "
+			Count: " count"
+			Present: " present"
+			Is: " is "
+			ListSeparator: ", "
+			OpenQuote: “
+			AnyListedValue: " (any listed value)"
+			And: " and "
+			Or: " or "
+			SinglePlayer: Single player
+			Multiplayer: Multiplayer
+			MultiplayerClient: Multiplayer client
+			SinglePlayerOrMultiplayerServer: Single player or multiplayer server
+			MultiplayerServer: Multiplayer server
+			SinglePlayerOrMultiplayerClient: Single player or multiplayer client
+			And2: " and "
+			HaveACombinedActiveCountOfAt: " have a combined active count of at most 1"
+			IsNot: " is not "
+			LessThan: " < "
+			GreaterThan: " > "
+			AtMost: " ≤ "
+			AtLeast: " ≥ "
+			Crafting: Crafting
+			Shimmer2: Shimmer
+			CreatureDrops: Creature drops
+			NPCShops: NPC shops
+			Harvesting: Harvesting
+			NPCSpawns: NPC spawns
+			TreasureBags: Treasure Bags
+			FishingCrates: Fishing crates
+			Fishing: Fishing
+			CloseCraftingOverview: Close crafting overview
+			RecipeBookmark: Recipe bookmark
+			Order: "Order: "
+			AllocatedNeeded: "Allocated / needed: "
+			ShiftBookmarkKeyCancelThisGroupAnd: Shift + bookmark key: cancel this group and its order
+			AvailableNeeded: "Available / needed: "
+			SearchHistory: Search history
+			PreviousPage: Previous page
+			NextPage: Next page
+			Uses: Uses
+			Sources: Sources
+			PreviousCategory: Previous category
+			NextCategory: Next category
+			ShowBookmarkedRecipesFirst: Show bookmarked recipes first
+			RefreshAvailableRecipesUsingCurrentMaterialsAnd: Refresh available recipes using current materials and conditions
+			CraftingStation: Crafting station
+			TargetIsInThe: Target is in the “
+			Form: ” form
+			In: "In "
+			SummonedUsing: ", summoned using “"
+			Separator2: ”
+			MonthWhenModsLoaded: Month when mods loaded
+			DayOfMonthWhenModsLoaded: Day of month when mods loaded
+			ActiveEntityID: " active entity ID"
+			PlayerHasBuff: Player has buff “
+			Or2: ” or “
+			Separator3: ”
+			Defeated: "Defeated "
+			ThenDefeated: " then defeated "
+			Projectile: Projectile
+			IsNot2: " is not "
+			Ranged: ranged
+			Melee: melee
+			Magic: magic
+			Summon: summon
+			DamageType: Damage type
+			OnTheLastProjectileHit: "On the last projectile hit, "
+			HighlightedItemsCanBeCrafted: Highlighted items can be crafted.
+			MissingIngredients: Missing ingredients
+			MissingStation: "Missing station: "
+			UnmetCondition: "Unmet condition: "
+			CouldNotCheckCondition: "Could not check condition: "
+			ThisRecipeIsCurrentlyUnavailableInThe: This recipe is currently unavailable in the crafting menu
+			HoldShiftForFullDetails: Hold Shift for full details
+			CraftingStationViewSources: Crafting station · View sources
+			HideJEIBookmarks: Hide JEI bookmarks
+			ShowJEIBookmarks: Show JEI bookmarks
+			CraftingIngredients: Crafting ingredients
+			Unbound: Unbound
+			HoverOverAnIngredientAndPressTo: Hover over an ingredient and press {0} to bookmark it.
+			FishingPower0: Fishing power: 0
+			TruffleWormsSummonDukeFishron: Truffle Worms summon Duke Fishron
+			RequiresAFishingPole: Requires a fishing pole
+			RequiresBait: Requires bait
+			CurrentFishingPowerIsZero: Current fishing power is zero
+			FishingPowerPondSize: Fishing power: {0} · Pond size: {1}/{2}
+			InsufficientPondSizeOrFishingPowerTo: Insufficient pond size or fishing power to catch a crate
+			FishingPowerAssumesAFullPondAnd: Fishing power: {0} · Assumes a full pond and no Chum Buckets
+			IncludesTheCalamityPearlAccessoryBonus: Includes the Calamity pearl accessory bonus
+			CrateRollRareRollWithinCrates: Crate roll: {0} · Rare roll within crates: {1}
+			RangeIncludesLuckVariation: Range includes luck variation
+			FinalCatchChanceForThisModdedCrate: Final catch chance for this modded crate is unknown
+			Lava: lava
+			ThisCrate0: "This crate: 0% · "
+			WrongWorldProgression: Wrong world progression
+			LavaFishingAbilityRequired: Lava fishing ability required
+			BobberIsInTheWrongLiquid: Bobber is in the wrong liquid
+			ChanceInThisEnvironment: "Chance in this environment: "
+			ChanceInTheListedBiome: "Chance in the listed biome: "
+			PerItemRollBeforeJunkEnemiesAnd: Per item roll, before junk, enemies and mod overrides.
+			Defeated2: "Defeated: "
+			Jungle: Jungle
+			Underworld: Underworld
+			JungleLab: Jungle lab
+			UnderworldLab: Underworld lab
+			In2: "In "
+			FrostMoon: Frost Moon
+			PumpkinMoon: Pumpkin Moon
+			Waves15161718And19: " waves 15–16, 17–18 and 19+ have additional chances of 1/4, 1/3 and 1/2 (Expert and above: 5/18, 7/18 and 2/3)"
+			BothRemixAndForTheWorthyWorld: Both Remix and For the worthy world features are active, and no other mechanical boss remains
+			NotInThePlayerSInventory: "Not in the player's inventory: "
+			ExpertMode: Expert Mode
+			MasterMode: Master Mode
+			RemixWorld: Remix world
+			GetFixedBoiWorld: Get fixed boi world
+			ForTheWorthyWorld: For the worthy world
+			DrunkWorld: Drunk world
+			Celebrationmk10World: Celebrationmk10 world
+			NotTheBeesWorld: Not the bees world
+			TheConstantWorld: The Constant world
+			NoTrapsWorld: No traps world
+			Rain: Rain
+			BloodMoon: Blood Moon
+			SolarEclipse: Solar Eclipse
+			Christmas: Christmas
+			Halloween: Halloween
+			MoonPhase: Moon phase
+			InGameTime: In-game time
+			NetworkMode: Network mode
+			WorldNPCs: World NPCs
+			Players: Players
+			LocalPlayer: Local player
+			LocalPlayerID: Local player ID
+			WorldID: World ID
+			CrimsonWorld: Crimson world
+			SpawnedFromAStatue: Spawned from a statue
+			TargetIsABoss: Target is a boss
+			TargetIsFriendly: Target is friendly
+			TargetIsATownNPC: Target is a town NPC
+			TargetNPCType: Target NPC type
+			TargetNPCNetID: Target NPC net ID
+			NPCName: NPC name
+			NPCHealth: NPC health
+			NPCMaximumHealth: NPC maximum health
+			NPCTargetPlayerID: NPC target player ID
+			ParentNPCID: Parent NPC ID
+			NPCAIState: NPC AI state
+			CurrentEventWave: Current event wave
+			LunarEventsActive: Lunar Events active
+			NPCCoinValue: NPC coin value
+			LastInteractingPlayerID: Last interacting player ID
+			KingSlimeDefeated: King Slime defeated
+			EyeOfCthulhuDefeated: Eye of Cthulhu defeated
+			EaterOfWorldsOrBrainOfCthulhu: Eater of Worlds or Brain of Cthulhu defeated
+			SkeletronDefeated: Skeletron defeated
+			QueenBeeDefeated: Queen Bee defeated
+			DeerclopsDefeated: Deerclops defeated
+			QueenSlimeDefeated: Queen Slime defeated
+			AtLeastOneMechanicalBossDefeated: At least one mechanical boss defeated
+			TheDestroyerDefeated: The Destroyer defeated
+			TheTwinsDefeated: The Twins defeated
+			SkeletronPrimeDefeated: Skeletron Prime defeated
+			PlanteraDefeated: Plantera defeated
+			GolemDefeated: Golem defeated
+			DukeFishronDefeated: Duke Fishron defeated
+			EmpressOfLightDefeated: Empress of Light defeated
+			LunaticCultistDefeated: Lunatic Cultist defeated
+			MoonLordDefeated: Moon Lord defeated
+			GoblinArmyDefeated: Goblin Army defeated
+			FrostLegionDefeated: Frost Legion defeated
+			PirateInvasionDefeated: Pirate Invasion defeated
+			MartianMadnessDefeated: Martian Madness defeated
+			EntityIsActive: Entity is active
+			EntityID: Entity ID
+			EntityPosition: Entity position
+			TargetNPC: Target NPC
+			DefeatedTier3OfTheOldOne: Defeated tier 3 of the Old One's Army
+			PlayerName: Player name
+			PlayerIsDead: Player is dead
+			CharacterDifficulty: Character difficulty
+			PlayerTeam: Player team
+			CompletedAnglerQuests: Completed Angler quests
+			PlayerInventory: Player inventory
+			PlayerEquipment: Player equipment
+			HeldItem: Held item
+			PlayerBuffType: Player buff type
+			PlayerHealth: Player health
+			MaximumPlayerHealth: Maximum player health
+			DemonHeartConsumed: Demon Heart consumed
+			OnTheSurface: On the surface
+			InTheUnderground: In the Underground
+			InTheCavernLayer: In the Cavern layer
+			InTheUnderworld: In the Underworld
+			InSpace: In Space
+			InTheDungeon: In the Dungeon
+			InTheJungle: In the Jungle
+			InTheSnowBiome: In the Snow biome
+			InTheDesert: In the Desert
+			AtTheOcean: At the Ocean
+			InTheHallow: In the Hallow
+			InTheCorruption: In the Corruption
+			InTheCrimson: In the Crimson
+			InAGlowingMushroomBiome: In a Glowing Mushroom biome
+			InAGraveyard: In a Graveyard
+			InTheForest: In the Forest
+			SourceNPC: Source NPC
+			SourceItemID: Source item ID
+			SimulatedDrop: Simulated drop
+			ItemType: Item type
+			ItemCount: Item count
+			ItemRarity: Item rarity
+			ItemValue: Item value
+			WorldSCopperTierOre: World's Copper-tier ore
+			WorldSIronTierOre: World's Iron-tier ore
+			WorldSSilverTierOre: World's Silver-tier ore
+			WorldSGoldTierOre: World's Gold-tier ore
+			WorldSCobaltTierOre: World's Cobalt-tier ore
+			WorldSMythrilTierOre: World's Mythril-tier ore
+			WorldSAdamantiteTierOre: World's Adamantite-tier ore
+			Setting: Setting “{0}”
+			DefeatedByPlayer: "Defeated by player: "
+			Colon: ":"
+			ResultingCreature: Resulting creature
+			SourceCreature: Source creature
+			Habitat: Habitat
+			Conditions: Conditions
+			Tools: Tools
+			Method: Method
+			BaseDropRate2: Base drop rate
+			Free: Free
+			Price: Price
+			BasePrice: Base price
+			AlsoRequires: Also requires
+			Details: Details
+			ShimmerTransformation: Shimmer transformation
+			ShimmerDecrafting: Shimmer decrafting
+			SummoningItems: Summoning items
+			BestiaryHabitatsAndConditions: Bestiary habitats and conditions
+			NoSpawnHabitatListedInTheBestiary: No spawn habitat listed in the Bestiary
+			RecipeFrom: "Recipe from: "
+			RecipeSource: Recipe source
+			LocateSource: Locate source
+			LocateOnMap: Locate on map
+			LocateResult: Locate result
+			RemoveThisRecipeFromBookmarks: Remove this recipe from bookmarks.
+			BookmarkThisRecipe: Bookmark this recipe.
+			SelectAndHighlightThisRecipeInThe: Select and highlight this recipe in the crafting menu
+			FillTheAECraftingBench: Fill the AE crafting bench
+			RequiresAnAvailableAECraftingBenchCrafting: Requires an available AE crafting bench, crafting stations and recipe conditions
+			CtrlLeftClickCraftInYourInventory: Ctrl + left click: craft in your inventory
+			CtrlLeftClickOpenCraftingOrders: Ctrl + left click: open crafting orders
+			HarvestByHand: Harvest by hand
+			HarvestWithTools: Harvest with tools
+			ShowOnMap: "Show on map: "
+			MapDisabled: Map disabled
+			ThisNPCIsCurrentlyAbsent: This NPC is currently absent
+			ShiftLeftClickLocateOnMap: Shift + left click: locate on map
+			RowsOf: Rows {0}–{1} of {2}
+			Missing: Missing: {0}
+			RegisteredFishingCrateCatchConditionsAreUnknown: Registered fishing crate. Catch conditions are unknown.
+			Fishing2: Fishing
+			None: None
+			CheckedInGameBy: Checked in game by {0}.{1}
+			GraveyardBiome: Graveyard biome
+			RequiresStation: "Requires station: "
+			FullMoon: Full Moon
+			WaningGibbous: Waning Gibbous
+			ThirdQuarter: Third Quarter
+			WaningCrescent: Waning Crescent
+			NewMoon: New Moon
+			WaxingCrescent: Waxing Crescent
+			FirstQuarter: First Quarter
+			WaxingGibbous: Waxing Gibbous
+			AfterDefeatingSkeletron: After defeating Skeletron
+			AfterDefeatingGolem: After defeating Golem
+			SubjectToThisDecraftingRecipeSBoss: Subject to this decrafting recipe's boss progression requirements
+			CoinLuckGained: "Coin Luck gained: "
+			ShimmerTransformationAfterDefeatingMoonLord: Shimmer transformation · After defeating Moon Lord
+			BeforeDefeatingMoonLord: Before defeating Moon Lord
+			ShimmerTransformation2: "Shimmer transformation · "
+			RevertsToAnEmptyMusicBox: Reverts to an empty Music Box
+			ShimmerTransformationBeforeDefeatingMoonLord: Shimmer transformation · Before defeating Moon Lord
+			ReleasesTheDivaSlimeIfStillLocked: Releases the Diva Slime if still locked
+			ReleasesCreature: "Releases creature · "
+			WhenHigherPriorityDecraftingConditionsAreUnmet: When higher-priority decrafting conditions are unmet
+			EachIngredientHasA13Chance: Each ingredient has a 1/3 chance of being lost
+			RegisteredQuantitiesShownModsMayAdjustThem: Registered quantities shown. Mods may adjust them at runtime.
+			OpenContainer: Open container
+			GlobalConditionalDrop: Global conditional drop
+			AIState: AI state
+			UnmetCondition2: Unmet condition (
+			ClassicMode: Classic Mode
+			OutsideMasterMode: Outside Master Mode
+			NotSpawnedByAStatue: Not spawned by a statue
+			AfterDefeatingPlantera: After defeating Plantera
+			OutsideARemixWorld: Outside a Remix world
+			OutsideTheConstant: Outside The Constant
+			RemixWorldHardmode: Remix world · Hardmode
+			RemixWorldPreHardmode: Remix world · Pre-Hardmode
+			ClassicModeTargetIsABoss: Classic Mode · Target is a boss
+			TheOtherTwinIsNoLongerPresent: The other Twin is no longer present
+			CheckedOnDropBy: Checked on drop by {0}.{1}
+			RandomTravelingMerchantStock: Random Traveling Merchant stock
+			AlsoRequiresUnitsOfCustomCurrency: Also requires {0} units of custom currency
+			DropsOnDefeatingTheLast: "Drops on defeating the last "
+			LastDropSuffix: ""
+			DropsWhenTheLastOneIsDefeated: ": drops when the last one is defeated"
+			DropsWhenTheBossEncounterEndsIn: Drops when the boss encounter ends in victory
+			Separator4: " / "
+			EnabledIfModsLoadDuringOrIs: Enabled if mods load during {0} or {1} is enabled
+			CalendarEventActive: Calendar event active ({0})
+			CalendarEventActiveTurnOffToStop: Calendar event active ({0}. Turn off {1} to stop the event, or enable it in {2} to start it.)
+			AtLeast2: "At least "
+			OfTheseConditions: " of these conditions: ("
+			IsActive: " is active"
+			DifficultyEnabled: " difficulty enabled"
+			Used: "Used: "
+			Equipped: "Equipped: "
+			EquippedInVanitySlot: "Equipped in vanity slot: "
+		}
+
 		HostOnly: Only the host can change this setting.
 		HoverForHelp: Hover for search syntax
 		CheatsLocked: Cheat items are locked in JEI host settings.
@@ -23,6 +423,16 @@ Mods: {
 		Configs: {
 			BrowserClientConfig: {
 				DisplayName: JEI client settings
+
+				CatalogColumns: {
+					Label: Item catalog columns
+					Tooltip: Columns per page in the right-hand catalog. Use 0 for automatic. Narrow windows may fit fewer columns.
+				}
+
+				CatalogRows: {
+					Label: Item catalog rows
+					Tooltip: Rows per page in the right-hand catalog. Use 0 for automatic. Short windows may fit fewer rows.
+				}
 
 				Density: {
 					Label: Standalone list density

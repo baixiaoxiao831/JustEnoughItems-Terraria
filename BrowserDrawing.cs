@@ -96,7 +96,7 @@ public static partial class BrowserUI
     private static void ItemImage(int id, Rectangle area)
     {
         if (area.Width < 1 || area.Height < 1 || (uint)id >= (uint)TextureAssets.Item.Length ||
-            TextureAssets.Item[id]?.IsLoaded != true) return;
+            !BrowserTexturePreload.Ready(TextureAssets.Item[id])) return;
         if (!displayItems.TryGetValue(id, out var item))
         {
             if (!ContentSamples.ItemsByType.TryGetValue(id, out var sample) || sample.IsAir) return;
@@ -156,7 +156,7 @@ public static partial class BrowserUI
 
     private static bool DrawStationTile(int id, Rectangle area)
     {
-        if ((uint)id >= (uint)TextureAssets.Tile.Length || TextureAssets.Tile[id]?.IsLoaded != true) return false;
+        if ((uint)id >= (uint)TextureAssets.Tile.Length || !BrowserTexturePreload.Ready(TextureAssets.Tile[id])) return false;
         var texture = TextureAssets.Tile[id].Value;
         var data = TileObjectData.GetTileData(id, 0, 0);
         // Ordinary terrain has no furniture placement data. Its atlas starts with one tile frame.
@@ -212,20 +212,18 @@ public static partial class BrowserUI
     private static void PlantImage(BrowserHarvest plant, Rectangle area)
     {
         if ((uint)plant.TileId < (uint)TextureAssets.Tile.Length &&
-            TextureAssets.Tile[plant.TileId] is { IsLoaded: true, Value: var texture } &&
+            BrowserTexturePreload.Ready(TextureAssets.Tile[plant.TileId]) &&
+            TextureAssets.Tile[plant.TileId].Value is { } texture &&
             plant.Frame.Width > 0 && plant.Frame.Height > 0 && texture.Bounds.Contains(plant.Frame))
             Fit(texture, plant.Frame, area, Color.White, 1);
         else ItemImage(plant.ItemId, area);
     }
 
-    private static readonly Dictionary<int, Texture2D> catalogHeads = new();
-    internal static Texture2D MapHead(NPC npc) => catalogHeads.GetValueOrDefault(npc.netID);
-    internal static void ClearPortraits() => catalogHeads.Clear();
-
-    private static Texture2D ResolveMapHead(NPC npc)
+    internal static Texture2D MapHead(NPC npc)
     {
         static Texture2D Ready(Asset<Texture2D>[] textures, int index) =>
-            (uint)index < (uint)textures.Length && textures[index] is { IsLoaded: true, Value: { IsDisposed: false } texture }
+            (uint)index < (uint)textures.Length && BrowserTexturePreload.Ready(textures[index]) &&
+            textures[index].Value is { IsDisposed: false } texture
                 ? texture : null;
 
         int type = npc.type;
@@ -256,7 +254,7 @@ public static partial class BrowserUI
             Fit(headTexture, headArt.Source, area, Color.White, headArt.TexelsPerPixel);
             return;
         }
-        if ((uint)npc.type >= (uint)TextureAssets.Npc.Length || TextureAssets.Npc[npc.type]?.IsLoaded != true) return;
+        if ((uint)npc.type >= (uint)TextureAssets.Npc.Length || !BrowserTexturePreload.Ready(TextureAssets.Npc[npc.type])) return;
         var texture = TextureAssets.Npc[npc.type].Value;
         if (texture == null) return;
         var body = Frame(texture, Math.Max(1, Main.npcFrameCount[npc.type]));
@@ -270,32 +268,15 @@ public static partial class BrowserUI
         return MeasureFrame(texture, frame);
     }
 
-    internal static void PreloadCatalogFrames()
-    {
-        catalogHeads.Clear();
-        foreach (var npc in ContentSamples.NpcsByNetId.Values)
-        {
-            if (npc == null) continue;
-            if (ResolveMapHead(npc) is { } portrait)
-            {
-                catalogHeads[npc.netID] = portrait;
-                Frame(portrait, 1);
-            }
-            if ((uint)npc.type < (uint)TextureAssets.Npc.Length && TextureAssets.Npc[npc.type] is { IsLoaded: true } asset)
-                Frame(asset.Value, Math.Max(1, Main.npcFrameCount[npc.type]));
-        }
-        foreach (var id in ContentSamples.ItemsByType.Keys)
-        {
-            if (id <= 0 || (uint)id >= (uint)TextureAssets.Item.Length || TextureAssets.Item[id]?.IsLoaded != true) continue;
-            Main.GetItemDrawFrame(id, out var texture, out var frame);
-            if (frame.Width > 0 && frame.Height > 0) MeasureFrame(texture, frame);
-        }
-    }
+    private static int frameMeasurementsLeft;
 
     private static SpriteFrame MeasureFrame(Texture2D texture, Rectangle source)
     {
         var frames = spriteFrames.GetOrCreateValue(texture);
         if (frames.TryGetValue(source, out var cached)) return cached;
+        // Show the untrimmed frame while spreading first-use GPU readbacks across draws.
+        if (frameMeasurementsLeft == 0) return new(source, 1);
+        frameMeasurementsLeft--;
         var frame = source;
         int texels = 1;
         // Texture packs can supply compressed or very large atlases. Their frame rectangle also fits.
@@ -412,7 +393,7 @@ public static partial class BrowserUI
         catalogHovered = fromCatalog;
         Fill(rect, Color.White * .16f);
         SetNamedTooltip(Name(target), Owner(target),
-            (station ? "工作方块 · 查看来源" : "") + extra, target.Npc ? 0 : target.Id);
+            (station ? JeiText.Get("CraftingStationViewSources") : "") + extra, target.Npc ? 0 : target.Id);
         if (leftClick || rightClick)
             clicked = ItemClick(target, leftClick ? primaryUses : !station, leftClick ? mark : null, fromCatalog);
     }
@@ -460,8 +441,8 @@ public static partial class BrowserUI
         tooltipQuality = itemId > 0 ? ItemQualityColor(itemId) : null;
     }
 
-    private const string HideBookmarksTitle = "隐藏JEI书签";
-    private const string ShowBookmarksTitle = "显示JEI书签";
+    private static string HideBookmarksTitle => JeiText.Get("HideJEIBookmarks");
+    private static string ShowBookmarksTitle => JeiText.Get("ShowJEIBookmarks");
     private enum TipLine { Title, Owner, Detail, Instruction, Craftable, Missing }
 
     private static string lastPagedTooltip;
@@ -476,7 +457,7 @@ public static partial class BrowserUI
         int paddingX = Math.Max(4, (int)MathF.Round(5 * unit));
         int paddingY = Math.Max(3, (int)MathF.Round(2.5f * unit));
         int shadow = 2 * edge;
-        bool bookmarkHelp = tooltip is HideBookmarksTitle or ShowBookmarksTitle;
+        bool bookmarkHelp = tooltip == HideBookmarksTitle || tooltip == ShowBookmarksTitle;
         int availableWidth = width - 2 * paddingX - shadow - 4;
         int maxWidth = bookmarkHelp || tooltipList ? availableWidth : Math.Min(availableWidth, Math.Max(180, (int)((tooltipQuality.HasValue ? 240 : 160) * unit)));
         int lineHeight = (int)MathF.Ceiling(Math.Max(BrowserFont.Measure("", BrowserFontFace.Body, pixels).Y,
@@ -508,22 +489,22 @@ public static partial class BrowserUI
             lines.Add((line.ToString(), kind));
         }
         var paragraphs = tooltip.Split('\n');
-        Wrap(tooltipList ? "合成物品" : paragraphs[0], TipLine.Title);
+        Wrap(tooltipList ? JeiText.Get("CraftingIngredients") : paragraphs[0], TipLine.Title);
         int titleLines = lines.Count;
         if (!string.IsNullOrWhiteSpace(tooltipOwner)) Wrap(tooltipOwner, TipLine.Owner);
         for (int n = tooltipList ? 0 : 1; n < paragraphs.Length; n++)
         {
             var kind = tooltipList ? paragraphs[n] switch {
-                NativeRecipeMaterials.CraftableHint => TipLine.Craftable,
-                NativeRecipeMaterials.MissingHint => TipLine.Missing, _ => TipLine.Detail
+                var hint when hint == NativeRecipeMaterials.CraftableHint => TipLine.Craftable,
+                var hint when hint == NativeRecipeMaterials.MissingHint => TipLine.Missing, _ => TipLine.Detail
             } : TipLine.Detail;
             Wrap(paragraphs[n], kind);
         }
         if (bookmarkHelp)
         {
             var keys = JustEnoughItemsTerraria.Bookmark.GetAssignedKeys();
-            string key = keys.Count > 0 ? keys[0] : "未绑定";
-            Wrap($"将鼠标悬停在一个原料上，按“{key}”将其添加为书签。", TipLine.Instruction);
+            string key = keys.Count > 0 ? keys[0] : JeiText.Get("Unbound");
+            Wrap(JeiText.Get("HoverOverAnIngredientAndPressTo", key), TipLine.Instruction);
         }
         int w = 1;
         int titleGap = !tooltipList && !bookmarkHelp && string.IsNullOrWhiteSpace(tooltipOwner) ? 0 : 2 * edge;

@@ -4,173 +4,173 @@
       "key": "daybloom",
       "item": 313,
       "seed": 307,
-      "habitat": "普通草地、神圣草地",
+      "habitat": "NormalOrHallowedGrass",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"夜间","tools":[],"tile":83,"frame":[0,0,16,20],"outputs":[[313,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"白天","tools":[],"tile":84,"frame":[0,0,16,20],"outputs":[[313,"1"],[307,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"白天","tools":[213,5295],"tile":84,"frame":[0,0,16,20],"outputs":[[313,"1–2"],[307,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"Nighttime","tools":[],"tile":83,"frame":[0,0,16,20],"outputs":[[313,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"Daytime","tools":[],"tile":84,"frame":[0,0,16,20],"outputs":[[313,"1"],[307,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"Daytime","tools":[213,5295],"tile":84,"frame":[0,0,16,20],"outputs":[[313,"1–2"],[307,"1–5"]]}
       ]
     },
     {
       "key": "moonglow",
       "item": 314,
       "seed": 308,
-      "habitat": "丛林草地",
+      "habitat": "JungleGrass",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"白天","tools":[],"tile":83,"frame":[18,0,16,20],"outputs":[[314,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"夜间","tools":[],"tile":84,"frame":[18,0,16,20],"outputs":[[314,"1"],[308,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"夜间","tools":[213,5295],"tile":84,"frame":[18,0,16,20],"outputs":[[314,"1–2"],[308,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"Daytime","tools":[],"tile":83,"frame":[18,0,16,20],"outputs":[[314,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"Nighttime","tools":[],"tile":84,"frame":[18,0,16,20],"outputs":[[314,"1"],[308,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"Nighttime","tools":[213,5295],"tile":84,"frame":[18,0,16,20],"outputs":[[314,"1–2"],[308,"1–5"]]}
       ]
     },
     {
       "key": "blinkroot",
       "item": 315,
       "seed": 309,
-      "habitat": "无草的土块或泥块",
+      "habitat": "BareDirtOrMud",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"植株不发光","tools":[],"tile":83,"frame":[36,0,16,20],"outputs":[[315,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"植株不定时发光","tools":[],"tile":84,"frame":[36,0,16,20],"outputs":[[315,"1"],[309,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"植株不定时发光","tools":[213,5295],"tile":84,"frame":[36,0,16,20],"outputs":[[315,"1–2"],[309,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"WhileThePlantIsNotGlowing","tools":[],"tile":83,"frame":[36,0,16,20],"outputs":[[315,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"WhileThePlantIsGlowing","tools":[],"tile":84,"frame":[36,0,16,20],"outputs":[[315,"1"],[309,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"WhileThePlantIsGlowing","tools":[213,5295],"tile":84,"frame":[36,0,16,20],"outputs":[[315,"1–2"],[309,"1–5"]]}
       ]
     },
     {
       "key": "deathweed",
       "item": 316,
       "seed": 310,
-      "habitat": "腐化地或猩红地的草地、石块",
+      "habitat": "CorruptOrCrimsonGrassOrStone",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"血月夜、满月夜除外","tools":[],"tile":83,"frame":[54,0,16,20],"outputs":[[316,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"血月夜或满月夜","tools":[],"tile":84,"frame":[54,0,16,20],"outputs":[[316,"1"],[310,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"血月夜或满月夜","tools":[213,5295],"tile":84,"frame":[54,0,16,20],"outputs":[[316,"1–2"],[310,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"ExceptOnBloodMoonOrFullMoon","tools":[],"tile":83,"frame":[54,0,16,20],"outputs":[[316,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"OnABloodMoonOrFullMoon","tools":[],"tile":84,"frame":[54,0,16,20],"outputs":[[316,"1"],[310,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"OnABloodMoonOrFullMoon","tools":[213,5295],"tile":84,"frame":[54,0,16,20],"outputs":[[316,"1–2"],[310,"1–5"]]}
       ]
     },
     {
       "key": "waterleaf",
       "item": 317,
       "seed": 311,
-      "habitat": "内陆的沙块或珍珠沙块",
+      "habitat": "InlandSandOrPearlsand",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"无雨、无雨云","tools":[],"tile":83,"frame":[72,0,16,20],"outputs":[[317,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"下雨或有雨云时","tools":[],"tile":84,"frame":[72,0,16,20],"outputs":[[317,"1"],[311,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"下雨或有雨云时","tools":[213,5295],"tile":84,"frame":[72,0,16,20],"outputs":[[317,"1–2"],[311,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"NoRainOrRainClouds","tools":[],"tile":83,"frame":[72,0,16,20],"outputs":[[317,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"DuringRainOrUnderRainClouds","tools":[],"tile":84,"frame":[72,0,16,20],"outputs":[[317,"1"],[311,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"DuringRainOrUnderRainClouds","tools":[213,5295],"tile":84,"frame":[72,0,16,20],"outputs":[[317,"1–2"],[311,"1–5"]]}
       ]
     },
     {
       "key": "fireblossom",
       "item": 318,
       "seed": 312,
-      "habitat": "灰烬块、灰烬草地",
+      "habitat": "AshBlocksOrAshGrass",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"雨天或开花时段外","tools":[],"tile":83,"frame":[90,0,16,20],"outputs":[[318,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"无雨，15:45 后至 19:30","tools":[],"tile":84,"frame":[90,0,16,20],"outputs":[[318,"1"],[312,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"无雨，15:45 后至 19:30","tools":[213,5295],"tile":84,"frame":[90,0,16,20],"outputs":[[318,"1–2"],[312,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"DuringRainOrOutsideBloomingHours","tools":[],"tile":83,"frame":[90,0,16,20],"outputs":[[318,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"DryWeatherAfter345PMUntil","tools":[],"tile":84,"frame":[90,0,16,20],"outputs":[[318,"1"],[312,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"DryWeatherAfter345PMUntil","tools":[213,5295],"tile":84,"frame":[90,0,16,20],"outputs":[[318,"1–2"],[312,"1–5"]]}
       ]
     },
     {
       "key": "shiverthorn",
       "item": 2358,
       "seed": 2357,
-      "habitat": "雪块或冰块（含感染变种）",
+      "habitat": "SnowOrIceBlocksIncludingInfectedVariants",
       "rows": [
-        {"key":"mature","stage":"成熟未开花","condition":"","tools":[],"tile":83,"frame":[108,0,16,20],"outputs":[[2358,"1"]]},
-        {"key":"bloom","stage":"开花","condition":"开花后持续开放","tools":[],"tile":84,"frame":[108,0,16,20],"outputs":[[2358,"1"],[2357,"1–3"]]},
-        {"key":"regrowth","stage":"开花","condition":"开花后持续开放","tools":[213,5295],"tile":84,"frame":[108,0,16,20],"outputs":[[2358,"1–2"],[2357,"1–5"]]}
+        {"key":"mature","stage":"MatureNotBlooming","condition":"","tools":[],"tile":83,"frame":[108,0,16,20],"outputs":[[2358,"1"]]},
+        {"key":"bloom","stage":"Blooming","condition":"RemainsOpenAfterBlooming","tools":[],"tile":84,"frame":[108,0,16,20],"outputs":[[2358,"1"],[2357,"1–3"]]},
+        {"key":"regrowth","stage":"Blooming","condition":"RemainsOpenAfterBlooming","tools":[213,5295],"tile":84,"frame":[108,0,16,20],"outputs":[[2358,"1–2"],[2357,"1–5"]]}
       ]
     },
     {
       "key": "teal-mushroom",
       "item": 1107,
-      "habitat": "地下土块、石块、泥块或丛林草地",
+      "habitat": "UndergroundDirtStoneMudOrJungleGrass",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[0,0,32,38],"outputs":[[1107,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[0,0,32,38],"outputs":[[1107,"1"]]}
       ]
     },
     {
       "key": "green-mushroom",
       "item": 1108,
-      "habitat": "地下土块、石块、泥块或丛林草地",
+      "habitat": "UndergroundDirtStoneMudOrJungleGrass",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[34,0,32,38],"outputs":[[1108,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[34,0,32,38],"outputs":[[1108,"1"]]}
       ]
     },
     {
       "key": "sky-blue-flower",
       "item": 1109,
-      "habitat": "丛林草地",
+      "habitat": "JungleGrass",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[68,0,32,38],"outputs":[[1109,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[68,0,32,38],"outputs":[[1109,"1"]]}
       ]
     },
     {
       "key": "yellow-marigold",
       "item": 1110,
-      "habitat": "地表无背景墙的普通或神圣草地",
+      "habitat": "SurfaceGrassOrHallowedGrassWithNo",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[102,0,32,38],"outputs":[[1110,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[102,0,32,38],"outputs":[[1110,"1"]]}
       ]
     },
     {
       "key": "blue-berries",
       "item": 1111,
-      "habitat": "地表无背景墙的普通、神圣或丛林草地",
+      "habitat": "SurfaceGrassHallowedGrassOrJungleGrass",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[136,0,32,38],"outputs":[[1111,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[136,0,32,38],"outputs":[[1111,"1"]]}
       ]
     },
     {
       "key": "lime-kelp",
       "item": 1112,
-      "habitat": "地下水池底部",
+      "habitat": "BottomOfUndergroundPools",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[170,0,32,38],"outputs":[[1112,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[170,0,32,38],"outputs":[[1112,"1"]]}
       ]
     },
     {
       "key": "pink-prickly-pear",
       "item": 1113,
-      "habitat": "仙人掌顶端",
+      "habitat": "TopOfACactus",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[204,0,32,38],"outputs":[[1113,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[204,0,32,38],"outputs":[[1113,"1"]]}
       ]
     },
     {
       "key": "orange-bloodroot",
       "item": 1114,
-      "habitat": "地下土块底面",
+      "habitat": "UndersideOfUndergroundDirtBlocks",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"","tools":[],"tile":227,"frame":[238,0,32,38],"outputs":[[1114,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"","tools":[],"tile":227,"frame":[238,0,32,38],"outputs":[[1114,"1"]]}
       ]
     },
     {
       "key": "strange-plant-1",
       "item": 3385,
-      "habitat": "草地、苔藓或土块",
+      "habitat": "GrassMossOrDirt",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"困难模式才会生长","tools":[],"tile":227,"frame":[272,0,32,38],"outputs":[[3385,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"GrowsOnlyInHardmode","tools":[],"tile":227,"frame":[272,0,32,38],"outputs":[[3385,"1"]]}
       ]
     },
     {
       "key": "strange-plant-2",
       "item": 3386,
-      "habitat": "草地、苔藓或土块",
+      "habitat": "GrassMossOrDirt",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"困难模式才会生长","tools":[],"tile":227,"frame":[306,0,32,38],"outputs":[[3386,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"GrowsOnlyInHardmode","tools":[],"tile":227,"frame":[306,0,32,38],"outputs":[[3386,"1"]]}
       ]
     },
     {
       "key": "strange-plant-3",
       "item": 3387,
-      "habitat": "草地、苔藓或土块",
+      "habitat": "GrassMossOrDirt",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"困难模式才会生长","tools":[],"tile":227,"frame":[340,0,32,38],"outputs":[[3387,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"GrowsOnlyInHardmode","tools":[],"tile":227,"frame":[340,0,32,38],"outputs":[[3387,"1"]]}
       ]
     },
     {
       "key": "strange-plant-4",
       "item": 3388,
-      "habitat": "草地、苔藓或土块",
+      "habitat": "GrassMossOrDirt",
       "rows": [
-        {"key":"pick","stage":"野生","condition":"困难模式才会生长","tools":[],"tile":227,"frame":[374,0,32,38],"outputs":[[3388,"1"]]}
+        {"key":"pick","stage":"Wild","condition":"GrowsOnlyInHardmode","tools":[],"tile":227,"frame":[374,0,32,38],"outputs":[[3388,"1"]]}
       ]
     }
   ]

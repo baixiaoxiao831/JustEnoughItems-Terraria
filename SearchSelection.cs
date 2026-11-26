@@ -17,6 +17,7 @@ private sealed class SearchSelection
     private static int Pixels => FontPixels(22, BrowserFontFace.Search);
     private static int Padding => Math.Max(1,(int)MathF.Ceiling(4*unit));
     private int anchor,caret,first;
+    internal int Caret => caret;
     private string cached="";
     private int[] stops={0};
     private bool dragging;
@@ -33,7 +34,7 @@ private sealed class SearchSelection
     }
     private int Next(int position,int step)=>stops[Math.Clamp(Array.BinarySearch(stops,position)+step,0,stops.Length-1)];
     private float Width(int start,int end)=>start==end?0:BrowserFont.Measure(cached[start..end],BrowserFontFace.Search,Pixels).X;
-    internal void Focus(string text){Layout(text);anchor=caret=text.Length;first=0;dragging=false;}
+    internal void Focus(string text, int? position = null){Layout(text);anchor=caret=Boundary(position ?? text.Length);first=0;dragging=false;}
     internal void SelectAll(string text){Layout(text);anchor=0;caret=text.Length;dragging=false;}
     internal void Mouse(string text,Rectangle field,bool press,bool down,bool shift){
         Layout(text);

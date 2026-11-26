@@ -22,7 +22,7 @@ public sealed partial class BrowserIndex
     {
         string text = description.Trim();
         if (IsGenericConditionLabel(text) && readPredicate() is { Length: > 0 } specific) return specific;
-        if (DropLabels.TryGetValue(text, out var label)) return label;
+        if (JeiText.Chinese && DropLabels.TryGetValue(text, out var label)) return label;
         // Inventory chat tags render as pictures in the game chat. Card text needs their
         // registered display name, unless the localization already prints it beside the icon.
         text = Regex.Replace(text, @"\[(?:i|item)(?:/[^:\]]+)?:(?<key>[^\]]+)\]", match => {
@@ -36,6 +36,7 @@ public sealed partial class BrowserIndex
         text = Regex.Replace(text, @"\[c/[0-9a-fA-F]{6}:(?<body>[^\]]*)\]", "${body}");
         text = text.Replace("这是专家模式下的掉落率", "专家模式", StringComparison.Ordinal);
         if (!text.Any(char.IsAsciiLetter) || text.Any(c => c >= '\u3400' && c <= '\u9fff')) return text;
+        if (!JeiText.Chinese) return text;
         return PredicateVocabulary.Published(text) ?? readPredicate() ?? text;
     }
 }

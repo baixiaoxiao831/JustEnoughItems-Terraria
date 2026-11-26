@@ -134,8 +134,8 @@ internal static class NativeRecipeMaterials
         return false;
     }
 
-    internal const string CraftableHint = "高亮的物品可以制作。";
-    internal const string MissingHint = "缺少物品";
+    internal static string CraftableHint => JeiText.Get("HighlightedItemsCanBeCrafted");
+    internal static string MissingHint => JeiText.Get("MissingIngredients");
     internal static string Legend(bool blue, bool red) => blue && red ? CraftableHint + "\n" + MissingHint :
         blue ? CraftableHint : red ? MissingHint : "";
 
@@ -146,12 +146,12 @@ internal static class NativeRecipeMaterials
         string legend = Legend(shortages.Any(s => s.Craftable), shortages.Any(s => s.Missing > 0 && !s.Craftable));
         if (legend.Length > 0) reasons.Add(legend);
         foreach (var station in row.Stations)
-            if (!Main.LocalPlayer.adjTile[station.TileId]) reasons.Add("缺少制作站：" + station.Name);
+            if (!Main.LocalPlayer.adjTile[station.TileId]) reasons.Add(JeiText.Get("MissingStation") + station.Name);
         foreach (var condition in Main.recipe[row.RecipeIndex].Conditions)
         {
-            try { if (!condition.IsMet()) reasons.Add("条件未满足：" + condition.Description.Value); }
-            catch { reasons.Add("无法确认条件：" + condition.Description.Value); }
+            try { if (!condition.IsMet()) reasons.Add(JeiText.Get("UnmetCondition") + condition.Description.Value); }
+            catch { reasons.Add(JeiText.Get("CouldNotCheckCondition") + condition.Description.Value); }
         }
-        return reasons.Count == 0 ? "原版制作栏当前未提供这条配方" : string.Join("\n", reasons);
+        return reasons.Count == 0 ? JeiText.Get("ThisRecipeIsCurrentlyUnavailableInThe") : string.Join("\n", reasons);
     }
 }

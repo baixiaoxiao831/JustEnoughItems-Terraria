@@ -145,7 +145,7 @@ public sealed class AdaptiveBrowserSystem : ModSystem
     {
         Invalidate();
         BrowserSearch.IndexCurrentNames();
-        if (!Main.dedServ) BrowserTexturePreload.LoadCatalog(Mod);
+        if (!Main.dedServ) BrowserTexturePreload.IndexOwners();
     }
     public override void OnLocalizationsLoaded() { Invalidate(); BrowserSearch.IndexCurrentNames(); }
     public override void OnWorldLoad() => Invalidate();

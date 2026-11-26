@@ -144,7 +144,7 @@ public static partial class BrowserUI
         {
             var content = values.Where(v => !string.IsNullOrWhiteSpace(v)).ToArray();
             if (content.Length == 0) return;
-            lines.Add(label + "：");
+            lines.Add(label + JeiText.Get("Colon"));
             foreach (string value in content) lines.AddRange(WrapCardText(value, CardWidth(row) - 12));
         }
         var notes = row.Note.Split(" · ", StringSplitOptions.RemoveEmptyEntries);
@@ -154,43 +154,43 @@ public static partial class BrowserUI
             void AddLongName(int? actor, bool output, float width, bool stacked)
             {
                 if (actor is int id && InlineActorName(id, ActorWidth(row, output, width, stacked)).Length == 0)
-                    Add(output ? "产出生物" : "来源生物", [Name(new Subject(id, true))]);
+                    Add(output ? JeiText.Get("ResultingCreature") : JeiText.Get("SourceCreature"), [Name(new Subject(id, true))]);
             }
             AddLongName(row.Npc, false, layout.LeftWidth, layout.StackLeft);
             AddLongName(row.SpawnedNpc, true, RelationSidesWidth - layout.LeftWidth, layout.StackRight);
         }
         if (row.Harvest is { } plant)
         {
-            Add("生长地", [plant.Habitat]);
-            Add("条件", [plant.Condition]);
-            Add("工具", plant.Tools.Select(Lang.GetItemNameValue));
+            Add(JeiText.Get("Habitat"), [plant.Habitat]);
+            Add(JeiText.Get("Conditions"), [plant.Condition]);
+            Add(JeiText.Get("Tools"), plant.Tools.Select(Lang.GetItemNameValue));
         }
         else if (row.Category == BrowserCategory.Drop)
         {
-            Add("方式", notes.Where(n => !n.StartsWith("基础掉率 ")));
-            Add("基础掉率", notes.Where(n => n.StartsWith("基础掉率 ")).Select(n => n[5..]));
+            Add(JeiText.Get("Method"), notes.Where(n => !n.StartsWith(JeiText.Get("BaseDropRate"))));
+            Add(JeiText.Get("BaseDropRate2"), notes.Where(n => n.StartsWith(JeiText.Get("BaseDropRate"))).Select(n => n[JeiText.Get("BaseDropRate").Length..]));
         }
         else if (row.Category == BrowserCategory.Shop)
         {
-            if (notes.Contains("免费")) Add("价格", ["免费"]);
-            else Add("基础价", row.Inputs.Select(slot => Lang.GetItemNameValue(slot.ItemId) + " ×" + slot.Count)
-                .Concat(notes.Where(n => n.StartsWith("另需"))));
-            Add("说明", notes.Where(n => n != "免费" && n != "基础价" && !n.StartsWith("另需")));
+            if (notes.Contains(JeiText.Get("Free"))) Add(JeiText.Get("Price"), [JeiText.Get("Free")]);
+            else Add(JeiText.Get("BasePrice"), row.Inputs.Select(slot => Lang.GetItemNameValue(slot.ItemId) + " ×" + slot.Count)
+                .Concat(notes.Where(n => n.StartsWith(JeiText.Get("AlsoRequires")))));
+            Add(JeiText.Get("Details"), notes.Where(n => n != JeiText.Get("Free") && n != JeiText.Get("BasePrice") && !n.StartsWith(JeiText.Get("AlsoRequires"))));
         }
         else if (row.Category == BrowserCategory.Shimmer)
         {
-            Add("说明", notes.Where(n => n is not ("微光转换" or "微光拆解")));
+            Add(JeiText.Get("Details"), notes.Where(n => n != JeiText.Get("ShimmerTransformation") && n != JeiText.Get("ShimmerDecrafting")));
         }
         else if (row.Category == BrowserCategory.Fishing)
         {
             foreach (var line in fishingNotes) lines.AddRange(WrapCardText(line, CardWidth(row) - 12));
         }
-        else Add("说明", notes);
+        else Add(JeiText.Get("Details"), notes);
         if (row.Category == BrowserCategory.Spawn && row.Inputs.Length > 0)
-            Add("召唤物", row.Inputs.Select(slot => Lang.GetItemNameValue(slot.ItemId)));
+            Add(JeiText.Get("SummoningItems"), row.Inputs.Select(slot => Lang.GetItemNameValue(slot.ItemId)));
         if (row.Category == BrowserCategory.Spawn)
-            Add("图鉴环境与条件", row.Conditions.Length > 0 ? row.Conditions : ["图鉴未登记生成环境"]);
-        else Add("条件", row.Conditions);
+            Add(JeiText.Get("BestiaryHabitatsAndConditions"), row.Conditions.Length > 0 ? row.Conditions : [JeiText.Get("NoSpawnHabitatListedInTheBestiary")]);
+        else Add(JeiText.Get("Conditions"), row.Conditions);
         return cardNotes[row] = lines.ToArray();
     }
 
@@ -241,9 +241,9 @@ public static partial class BrowserUI
                     .Where(name => !string.IsNullOrEmpty(name)).Distinct();
                 string owners = string.Join("、", mods);
                 if (row.ConditionTooltip.Length > 0)
-                    SetNamedTooltip(row.ConditionTooltip, row.ConditionOwner, owners.Length > 0 ? "配方来源：" + owners : "");
+                    SetNamedTooltip(row.ConditionTooltip, row.ConditionOwner, owners.Length > 0 ? JeiText.Get("RecipeFrom") + owners : "");
                 else if (owners.Length > 0)
-                    SetNamedTooltip("配方来源", owners);
+                    SetNamedTooltip(JeiText.Get("RecipeSource"), owners);
             }
             if (row.Outputs.Length > 0) Slot(row.Outputs[0], x + 94, y + 18, true);
         }
@@ -274,13 +274,13 @@ public static partial class BrowserUI
         bool resultLocator = CanLocate(row, row.SpawnedNpc);
         bool twoActors = sourceLocator && resultLocator;
         if (sourceLocator && row.Npc is int source)
-            DrawLocateButton(row, source, x + 6, y + body, twoActors ? "定位来源" : "地图定位");
+            DrawLocateButton(row, source, x + 6, y + body, twoActors ? JeiText.Get("LocateSource") : JeiText.Get("LocateOnMap"));
         if (resultLocator && row.SpawnedNpc is int result)
-            DrawLocateButton(row, result, x + (twoActors ? w / 2 : 6), y + body, twoActors ? "定位产出" : "地图定位");
+            DrawLocateButton(row, result, x + (twoActors ? w / 2 : 6), y + body, twoActors ? JeiText.Get("LocateResult") : JeiText.Get("LocateOnMap"));
         bool saved = BrowserPreferences.Bookmarks.Contains("r:" + row.Key);
         float bookmarkY=y+height-(craft?28:13);
         Button(x + w + 2, bookmarkY, 13, "recipe_bookmark",
-            saved ? "从书签中移除该配方。" : "添加该配方到书签。",
+            saved ? JeiText.Get("RemoveThisRecipeFromBookmarks") : JeiText.Get("BookmarkThisRecipe"),
             () => ToggleMark("r:" + row.Key), saved, iconSize: 9);
         if (saved) Fill(Box(x + w + 2, bookmarkY, 13, 13), Color.Lime * (1f / 15f));
         if(craft){
@@ -289,7 +289,7 @@ public static partial class BrowserUI
                 int recipe = NativeRecipeMaterials.AvailableRecipe(row);
                 bool ready = recipe >= 0 && InventoryOverview.BackpackAvailable;
                 var transfer = Box(x + w + 2, y + height - 13, 13, 13);
-                string tip = ready ? "选中并高亮原版制作栏的这条配方" :
+                string tip = ready ? JeiText.Get("SelectAndHighlightThisRecipeInThe") :
                     transfer.Contains(mouse) ? NativeRecipeMaterials.Explain(row) : null;
                 DrawTransfer(row, transfer, x+w+2, y+height-13, tip, ready,
                     () => InventoryOverview.SelectRecipe(recipe, true));
@@ -298,7 +298,7 @@ public static partial class BrowserUI
             {
                 bool ready = RecipeBench?.Invoke(row.RecipeIndex, false) == true;
                 bool missing = !ready && benchMaterials?.Any(s => s.Missing > 0) == true;
-                string tip = ready ? "填入 AE 工作台" : missing ? NativeRecipeMaterials.Legend(benchMaterials.Any(s => s.Craftable), benchMaterials.Any(s => s.Missing > 0 && !s.Craftable)) : "需要可用的 AE 工作台、工作站和配方条件";
+                string tip = ready ? JeiText.Get("FillTheAECraftingBench") : missing ? NativeRecipeMaterials.Legend(benchMaterials.Any(s => s.Craftable), benchMaterials.Any(s => s.Missing > 0 && !s.Craftable)) : JeiText.Get("RequiresAnAvailableAECraftingBenchCrafting");
                 DrawTransfer(row, Box(x+w+2,y+height-13,13,13), x+w+2, y+height-13, tip, ready,
                     () => { if (RecipeBench(row.RecipeIndex, true)) Close(); });
             }
@@ -314,7 +314,7 @@ public static partial class BrowserUI
         bool over = area.Contains(mouse);
         if (over && fromBackpack && NativeRecipeMaterials.MultiStepEnabled && NativeRecipeMaterials.CraftChain(row, false))
         {
-            tip += "\nCtrl＋左键：在背包中合成物品";
+            tip += "\n" + JeiText.Get("CtrlLeftClickCraftInYourInventory");
             var keys = Keyboard.GetState();
             if (keys.IsKeyDown(Keys.LeftControl) || keys.IsKeyDown(Keys.RightControl))
                 action = () => { if (NativeRecipeMaterials.CraftChain(row, true)) Close(); };
@@ -324,7 +324,7 @@ public static partial class BrowserUI
             bool craftableIntermediate = tip == NativeRecipeMaterials.CraftableHint;
             if (ready || craftableIntermediate)
             {
-                tip += "\nCtrl＋左键：打开下单界面";
+                tip += "\n" + JeiText.Get("CtrlLeftClickOpenCraftingOrders");
                 var keys = Keyboard.GetState();
                 if (keys.IsKeyDown(Keys.LeftControl) || keys.IsKeyDown(Keys.RightControl))
                     action = () => { if (OrderItem(row.Outputs[0].ItemId)) Close(); };
@@ -347,7 +347,7 @@ public static partial class BrowserUI
             (int)MathF.Ceiling(BrowserFont.Measure(plant.Name, BrowserFontFace.Body, FontPixels(14)).X));
         Label(plant.Name, new Rectangle(heading.X, heading.Y, nameWidth, heading.Height), 14, cardInk, align: 0);
         Label(stage, new Rectangle(heading.X + nameWidth, heading.Y, stageWidth, heading.Height), 11, cardInk, align: 0);
-        Label(plant.Tools.Length == 0 ? "普通采收" : "工具采收", method, 10, cardInk, align: 1);
+        Label(plant.Tools.Length == 0 ? JeiText.Get("HarvestByHand") : JeiText.Get("HarvestWithTools"), method, 10, cardInk, align: 1);
 
         var art = Box(x + 22, y + 20, 34, 30);
         PlantImage(plant, art);
@@ -415,7 +415,7 @@ public static partial class BrowserUI
         Panel(frame, rect, 3);
         Label(label, rect, 14, target == null ? Color.Silver : Color.White, shadow: true);
         if (!over) return;
-        SetPlainTooltip(target == null ? hint : "在地图上标出" + Name(new Subject(id, true)));
+        SetPlainTooltip(target == null ? hint : JeiText.Get("ShowOnMap") + Name(new Subject(id, true)));
         if (leftClick && target != null)
             clicked = () => { ShowNpcOnMap(row, id); PlayClick(); };
     }
@@ -424,14 +424,14 @@ public static partial class BrowserUI
     {
         hint = "";
         if (!CanLocate(row, id)) return null;
-        hint = "地图已禁用";
+        hint = JeiText.Get("MapDisabled");
         if (!Main.mapEnabled) return null;
         NPC nearest = null;
         foreach (var npc in Main.ActiveNPCs)
             if ((npc.type == id || npc.netID == id) && npc.friendly && npc.life > 0 && (nearest == null ||
                 npc.DistanceSQ(Main.LocalPlayer.Center) < nearest.DistanceSQ(Main.LocalPlayer.Center)))
                 nearest = npc;
-        hint = nearest == null ? "该 NPC 当前不在世界中" : "Shift＋左键：在地图上定位";
+        hint = nearest == null ? JeiText.Get("ThisNPCIsCurrentlyAbsent") : JeiText.Get("ShiftLeftClickLocateOnMap");
         return nearest;
     }
 
@@ -483,7 +483,7 @@ public static partial class BrowserUI
         if (track.Contains(mouse) && Main.mouseLeft)
         {
             scroll[key] = Math.Clamp((int)MathF.Round(max * ((mouse.Y / unit - y - thumb / 2) / (height - thumb))), 0, max);
-            SetPlainTooltip($"第 {scroll[key] + 1}–{scroll[key] + rows} 行，共 {max + rows} 行");
+            SetPlainTooltip(JeiText.Get("RowsOf", scroll[key] + 1, scroll[key] + rows, max + rows));
         }
         if (wheel != 0 && Box(x, y, cols * cell + 5, height).Contains(mouse))
         {
@@ -501,7 +501,7 @@ public static partial class BrowserUI
         {
             Color tint = shortage.Craftable ? new Color(38, 100, 222) : new Color(197, 52, 54);
             Fill(Box(x + 1, y + 1, size - 2, size - 2), tint * .82f);
-            detail = $"缺少数量：{shortage.Missing}";
+            detail = JeiText.Get("Missing", shortage.Missing);
         }
         if (highlight)
         {

@@ -34,6 +34,7 @@ public sealed class BrowserRow
     public string Key { get; internal set; }
     public BrowserCategory Category { get; init; }
     public BrowserHarvest Harvest { get; init; }
+    internal bool LavaCrate { get; init; }
     public bool IsDecraft { get; init; }
     public BrowserSlot[] Inputs { get; init; } = Array.Empty<BrowserSlot>();
     public BrowserSlot[] Outputs { get; init; } = Array.Empty<BrowserSlot>();
@@ -91,9 +92,10 @@ public sealed partial class BrowserIndex
         var fishing=JsonSerializer.Deserialize<Dictionary<string,string[]>>(ModContent.GetInstance<JustEnoughItemsTerraria>().GetFileBytes("Data/FishingCrates.json"));
         foreach(int id in index.Items.Where(id=>ItemID.Sets.IsFishingCrate[id])){
             string name=id<ItemID.Count?ItemID.Search.GetName(id):ItemLoader.GetItem(id).FullName;
-            var conditions=fishing.GetValueOrDefault(name)??new[]{"已登记为钓鱼匣，具体捕获条件尚未核实"};
+            var conditions=fishing.GetValueOrDefault(name)?.Select(JeiText.Get).ToArray()??new[]{JeiText.Get("RegisteredFishingCrateCatchConditionsAreUnknown")};
             index.Add("fishing|"+BrowserKeys.ItemKey(id),new BrowserRow{Category=BrowserCategory.Fishing,
-                Outputs=[BrowserSlot.Of(id)],Note="垂钓",Conditions=conditions});
+                LavaCrate = name is "LavaCrate" or "LavaCrateHard" or "CalamityMod/SlagCrate" or "CalamityMod/BrimstoneCrate",
+                Outputs=[BrowserSlot.Of(id)],Note=JeiText.Get("Fishing2"),Conditions=conditions});
         }
         index.BuildDrops();
         foreach (var (key, rows) in index.lookup)
@@ -130,7 +132,7 @@ public sealed partial class BrowserIndex
                 .Select(k => Language.GetTextValue(k)).Distinct().ToArray() ?? [];
             var inputs = summons.TryGetValue(id, out var choices) ? choices.Order().Select(item => BrowserSlot.Of(item)).ToArray() : [];
             if (tags.Length == 0 && itemOnly.Contains(id) && inputs.Length == 1 &&
-                DropPredicateText.OnlyEncounterGate(ContentSamples.ItemsByType[inputs[0].ItemId].ModItem)) tags = ["无"];
+                DropPredicateText.OnlyEncounterGate(ContentSamples.ItemsByType[inputs[0].ItemId].ModItem)) tags = [JeiText.Get("None")];
             var row = new BrowserRow {
                 Category = BrowserCategory.Spawn, SpawnedNpc = id, Conditions = tags,
                 Inputs = inputs
@@ -364,7 +366,7 @@ public sealed partial class BrowserIndex
         string text = condition?.Description?.Value;
         if (!string.IsNullOrWhiteSpace(text)) return PublishedCondition(text, () => DropPredicateText.Describe(condition.Predicate));
         return DropPredicateText.Describe(condition?.Predicate) ??
-            $"由 {condition?.Predicate?.Method.DeclaringType?.Assembly.GetName().Name} 的 {condition?.Predicate?.Method.Name} 在游戏中判定";
+            JeiText.Get("CheckedInGameBy", condition?.Predicate?.Method.DeclaringType?.Assembly.GetName().Name, condition?.Predicate?.Method.Name);
     }
     private static string Join(params string[] parts) =>
         string.Join(" · ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
@@ -419,7 +421,7 @@ public sealed partial class BrowserIndex
                 if(inputs.Count!=recipe.requiredItem.Count)continue;
                 var conditions = recipe.Conditions.ToArray();
                 string ConditionLabel(Condition c) =>
-                    c?.Description?.Key == "Conditions.InGraveyard" ? "墓地环境" : Describe(c);
+                    c?.Description?.Key == "Conditions.InGraveyard" ? JeiText.Get("GraveyardBiome") : Describe(c);
                 int EnvironmentIcon(Condition c) => environmentIcons.GetValueOrDefault(c?.Description?.Key ?? "");
                 var tipConditions = conditions.OrderByDescending(c => EnvironmentIcon(c) > 0).ToArray();
                 string keyOfCondition = tipConditions.FirstOrDefault()?.Description?.Key ?? "";
@@ -436,7 +438,7 @@ public sealed partial class BrowserIndex
                     ConditionTooltip = string.Join("\n", tipConditions.Select(ConditionLabel).Distinct()),
                     ConditionOwner = conditionOwner,
                     Conditions = conditions.Where(c => EnvironmentIcon(c) == 0).Select(Describe).Concat(requiredStations.Where(s => s.CombinedOnly)
-                        .Select(s => "需要工作方块：" + s.Name)).ToArray()
+                        .Select(s => JeiText.Get("RequiresStation") + s.Name)).ToArray()
                 };
                 string key = string.Join("|", "craft", slotKey(recipe.createItem),
                     string.Join(",", slotKeys.Order(StringComparer.Ordinal)),

@@ -61,7 +61,7 @@ internal static class EquipmentPreview
     {
         var keys = Microsoft.Xna.Framework.Input.Keyboard.GetState();
         return keys.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || keys.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)
-            ? DescribeItem(item) : "按住 Shift 显示全部信息";
+            ? DescribeItem(item) : JeiText.Get("HoldShiftForFullDetails");
     }
 
     internal static string Describe(int id) => DescribeItem(ContentSamples.ItemsByType[id]);

@@ -57,7 +57,7 @@ internal static partial class DropPredicateText
 
         for (int k = 2; k < vars.Length; k++)
             if (table.Select((v,i) => v == (BitOperations.PopCount((uint)i) >= k)).All(v => v))
-                return Atom("下列条件至少满足 " + k + " 项（" + string.Join("、",vars.Select(v => Print(v))) + "）");
+                return Atom(JeiText.Get("AtLeast2") + k + JeiText.Get("OfTheseConditions") + string.Join(JeiText.Get("ListSeparator"),vars.Select(v => Print(v))) + JeiText.Get("CloseParen"));
 
         // Test independent subexpressions before spelling out alternatives. For instance
         // (A or B) and (C or D) is much clearer than four repeated pairs.

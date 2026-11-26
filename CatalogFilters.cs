@@ -14,7 +14,8 @@ internal sealed class CatalogFilters
     internal Dictionary<string, HashSet<int>> Tags { get; } = new(StringComparer.OrdinalIgnoreCase);
     internal Dictionary<int, int> NativeRanks { get; } = new();
     internal int[] OrderedItems { get; }
-    private readonly Dictionary<string, string> owners = new(StringComparer.Ordinal);
+    internal ModSuggestion[] Mods { get; }
+    private readonly Dictionary<string, string[]> owners = new(StringComparer.Ordinal);
     private static readonly Regex terms = new(@"[@#][^\s@#]*|[^\s@#]+", RegexOptions.Compiled);
 
     internal CatalogFilters(IEnumerable<int> ids)
@@ -36,6 +37,9 @@ internal sealed class CatalogFilters
             Tags.TryAdd(localized, members);
         }
         OrderedItems = ids.OrderBy(id => NativeRanks.GetValueOrDefault(id, int.MaxValue)).ToArray();
+        var mods = Terraria.ModLoader.ModLoader.Mods.Select(mod =>
+            new ModSuggestion(mod.Name, mod.Name == "ModLoader" ? "tModLoader" : mod.DisplayNameClean));
+        Mods = ModSuggestions.Sort(mods.Prepend(new ModSuggestion("Terraria", "Terraria")));
         foreach (var (key, groupId) in RecipeGroup.recipeGroupIDs)
         {
             if (!Tags.TryGetValue(key, out var items)) Tags[key] = items = new();
@@ -49,12 +53,11 @@ internal sealed class CatalogFilters
             if (!owners.ContainsKey(owner))
             {
                 string display = owner == "ModLoader" ? "tModLoader" : mod?.DisplayNameClean;
-                owners.Add(owner, display != null && display.All(char.IsAscii) ? owner + " " + display : owner);
+                owners.Add(owner, string.IsNullOrWhiteSpace(display) || display == owner
+                    ? [owner] : [owner, display]);
             }
         }
     }
-
-    internal IReadOnlyDictionary<string, string> OwnerSearchNames => owners;
 
     private static readonly Regex ExpressionTokens = new(@"\||-?[@#]?""[^""]*""?|[^\s""|]+", RegexOptions.Compiled);
 
@@ -117,7 +120,11 @@ internal sealed class CatalogFilters
                 }
                 else if (field == '@')
                 {
-                    var sources = owners.Where(p => Contains(BrowserSearch.Normalize(p.Value))).Select(p => p.Key).ToHashSet();
+                    // A completion inserts a quoted internal ID. Keep similarly named add-ons separate.
+                    var exact = quoted && !glob ? Mods.FirstOrDefault(m =>
+                        string.Equals(m.Id, body.Trim('"'), StringComparison.OrdinalIgnoreCase)) : null;
+                    var sources = exact != null ? new HashSet<string> { exact.Id } :
+                        owners.Where(p => p.Value.Any(alias => BrowserSearch.MatchesPattern(alias, quoted, Contains))).Select(p => p.Key).ToHashSet();
                     matches = candidates.Where(id => sources.Contains(ContentSamples.ItemsByType[id].ModItem?.Mod.Name ?? "Terraria"));
                 }
                 else matches = candidates.Where(id => BrowserSearch.MatchesPattern(Lang.GetItemNameValue(id), quoted, Contains));
@@ -157,7 +164,7 @@ internal sealed class CatalogFilters
             {
                 string term = word[1..];
                 HashSet<string> Find(string text) => owners.Where(p => text.Length == 0
-                    ? p.Key != "Terraria" : BrowserSearch.Matches(p.Value, text)).Select(p => p.Key).ToHashSet();
+                    ? p.Key != "Terraria" : p.Value.Any(alias => BrowserSearch.Matches(alias, text))).Select(p => p.Key).ToHashSet();
                 var matches = Find(term);
                 while (term.Length > 0 && i + 1 < words.Length && words[i + 1][0] is not ('#' or '@'))
                 {
@@ -173,8 +180,18 @@ internal sealed class CatalogFilters
             else names.Add(word);
         }
         string name = string.Join(" ", names);
-        return ids.Where(id => tagFilters.All(set => set.Contains(id))
-            && ownerFilters.All(set => set.Contains(ContentSamples.ItemsByType[id].ModItem?.Mod.Name ?? "Terraria"))
-            && (name.Length == 0 || BrowserSearch.Matches(Lang.GetItemNameValue(id), name))).ToArray();
+        bool MatchesItem(int id)
+        {
+            foreach (var tag in tagFilters)
+                if (!tag.Contains(id)) return false;
+            if (ownerFilters.Count > 0)
+            {
+                string owner = ContentSamples.ItemsByType[id].ModItem?.Mod.Name ?? "Terraria";
+                foreach (var ownersForTerm in ownerFilters)
+                    if (!ownersForTerm.Contains(owner)) return false;
+            }
+            return name.Length == 0 || BrowserSearch.Matches(Lang.GetItemNameValue(id), name);
+        }
+        return ids.Where(MatchesItem).ToArray();
     }
 }

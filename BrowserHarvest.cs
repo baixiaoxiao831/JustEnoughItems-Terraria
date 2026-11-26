@@ -22,9 +22,6 @@ public sealed partial class BrowserIndex
         JsonSerializer.Deserialize<HarvestCatalog>(mod.GetFileBytes("Data/HarvestSources.json"),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Plants;
 
-    internal static IEnumerable<int> HarvestTileIds(Mod mod) =>
-        ReadHarvestPlants(mod).SelectMany(plant => plant.Rows).Select(stage => stage.Tile).Distinct();
-
     private void BuildHarvests()
     {
         // Wild and planted herbs share a tile. Seeds and tools are searchable uses,
@@ -42,8 +39,8 @@ public sealed partial class BrowserIndex
             var plantFrame = new Rectangle(f[0], f[1], f[2], f[3]);
             Add($"harvest|{plant.Key}|{stage.Key}", new BrowserRow {
                 Category = BrowserCategory.Harvest, Outputs = outputs,
-                Harvest = new(plant.Item, plant.Seed, Lang.GetItemNameValue(plant.Item), stage.Stage,
-                    plant.Habitat, stage.Condition, stage.Tools, stage.Tile, plantFrame)
+                Harvest = new(plant.Item, plant.Seed, Lang.GetItemNameValue(plant.Item), JeiText.Get(stage.Stage),
+                    JeiText.Get(plant.Habitat), JeiText.Get(stage.Condition), stage.Tools, stage.Tile, plantFrame)
             });
         }
     }

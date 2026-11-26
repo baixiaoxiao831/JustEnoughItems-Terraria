@@ -53,7 +53,7 @@ internal static partial class PredicateVocabulary
                     ops[6].OpCode.Code == Code.Stind_Ref && ops[2].Operand == ops[7]) {
                     string key = (string)ops[4].Operand;
                     if (!Language.Exists(key)) key = "Mods." + owner.Name + "." + key;
-                    if (Language.Exists(key)) return "目标为「" + Language.GetTextValue(key) + "」形态";
+                    if (Language.Exists(key)) return JeiText.Get("TargetIsInThe") + Language.GetTextValue(key) + JeiText.Get("Form");
                 }
             }
             foreach (var item in owner.GetContent<ModItem>()) {
@@ -71,7 +71,7 @@ internal static partial class PredicateVocabulary
                         !ops.Any(i => i.Operand is GenericInstanceMethod npc && npc.Name == "NPCType" &&
                             npc.GenericArguments[0].FullName == field.DeclaringType.FullName.Replace('+','/'))) continue;
                     string world = Member(typeof(Main).GetField(guard.Name,BindingFlags.Public | BindingFlags.Static));
-                    if (world != null) return "在" + world + "用「" + item.DisplayName.Value + "」召唤";
+                    if (world != null) return JeiText.Get("In") + world + JeiText.Get("SummonedUsing") + item.DisplayName.Value + JeiText.Get("Separator2");
                 }
             }
             return null;
@@ -84,7 +84,7 @@ internal static partial class PredicateVocabulary
                 using var copy = new DynamicMethodDefinition(load);
                 foreach (var store in copy.Definition.Body.Instructions.Where(i => i.OpCode.Code == Code.Stsfld && IsField(i,field)))
                     if (store.Previous?.Operand is MethodReference date && date.DeclaringType.FullName == typeof(DateTime).FullName &&
-                        date.Name is "get_Month" or "get_Day") return date.Name == "get_Month" ? "模组加载时的月份" : "模组加载时的日期（日）";
+                        date.Name is "get_Month" or "get_Day") return date.Name == "get_Month" ? JeiText.Get("MonthWhenModsLoaded") : JeiText.Get("DayOfMonthWhenModsLoaded");
             }
             var species = new HashSet<string>();
             foreach (var npc in owner.GetContent<ModNPC>()) {
@@ -96,7 +96,7 @@ internal static partial class PredicateVocabulary
                     i.Previous.Previous?.Operand is MethodReference { Name:"get_NPC", DeclaringType.FullName:"Terraria.ModLoader.ModNPC" }))
                     species.Add(npc.DisplayName.Value);
             }
-            return species.Count == 1 ? species.Single() + "的在场编号" : null;
+            return species.Count == 1 ? species.Single() + JeiText.Get("ActiveEntityID") : null;
         }
         if (field.FieldType == typeof(bool) && !field.IsStatic && typeof(ModPlayer).IsAssignableFrom(field.DeclaringType))
         {
@@ -109,7 +109,7 @@ internal static partial class PredicateVocabulary
                 if (copy.Definition.Body.Instructions.Any(i => i.OpCode.Code == Code.Stfld && IsField(i,field) &&
                     i.Previous?.OpCode.Code == Code.Ldc_I4_1)) buffs.Add(buff.DisplayName.Value);
             }
-            return buffs.Count == 0 ? null : "玩家具有「" + string.Join("」或「", buffs) + "」增益";
+            return buffs.Count == 0 ? null : JeiText.Get("PlayerHasBuff") + string.Join(JeiText.Get("Or2"), buffs) + JeiText.Get("Separator3");
         }
         if (field.FieldType != typeof(bool) || !field.IsStatic) return null;
         string calendar = CalendarFlag(field,owner);
@@ -138,7 +138,7 @@ internal static partial class PredicateVocabulary
                 int call = il.IndexOf(prerequisite.Previous.Previous);
                 if (call < 11 || il[call-2].OpCode.Code != Code.Ldstr || il[call-6].OpCode.Code != Code.Ldstr ||
                     (string)il[call-6].Operand is not ("Downed" or "GetDownedBoss" or "GetBossDowned")) continue;
-                return "击败" + Boss(mods[0],(string)il[call-2].Operand) + "后又击败了" + Lang.GetNPCNameValue(id);
+                return JeiText.Get("Defeated") + Boss(mods[0],(string)il[call-2].Operand) + JeiText.Get("ThenDefeated") + Lang.GetNPCNameValue(id);
             }
         }
         return null;
@@ -186,22 +186,22 @@ internal static partial class PredicateVocabulary
                         if (matches.Length != 1) { terms.Clear(); break; }
                         name = matches[0];
                     }
-                    name = "射弹" + (equal == (target == yes) ? "为" : "不是") + "「" + name + "」";
+                    name = JeiText.Get("Projectile") + (equal == (target == yes) ? JeiText.Get("Is") : JeiText.Get("IsNot2")) + "「" + name + "」";
                 }
                 else if (source.Name == "get_DamageType" && constant.Operand is MethodReference damage &&
                          damage.DeclaringType.FullName == typeof(DamageClass).FullName)
                 {
-                    string category = damage.Name switch { "get_Ranged" => "远程", "get_Melee" => "近战",
-                        "get_Magic" => "魔法", "get_Summon" => "召唤", _ => null };
+                    string category = damage.Name switch { "get_Ranged" => JeiText.Get("Ranged"), "get_Melee" => JeiText.Get("Melee"),
+                        "get_Magic" => JeiText.Get("Magic"), "get_Summon" => JeiText.Get("Summon"), _ => null };
                     if (category == null) { terms.Clear(); break; }
-                    name = "伤害类型" + (equal == (target == yes) ? "为" : "不是") + category;
+                    name = JeiText.Get("DamageType") + (equal == (target == yes) ? JeiText.Get("Is") : JeiText.Get("IsNot2")) + category;
                 }
                 else { terms.Clear(); break; }
                 terms.Insert(0,(name,target == yes));
                 branch = constant.Previous.Previous?.Previous;
             }
             if (terms.Count == 1 || terms.Count == 2)
-                return "上次射弹命中时，" + terms[0].text + (terms.Count == 1 ? "" : (terms[0].jumpsToSuccess ? "或" : "且") + terms[1].text);
+                return JeiText.Get("OnTheLastProjectileHit") + terms[0].text + (terms.Count == 1 ? "" : (terms[0].jumpsToSuccess ? JeiText.Get("Or") : JeiText.Get("And")) + terms[1].text);
         }
         return null;
     }

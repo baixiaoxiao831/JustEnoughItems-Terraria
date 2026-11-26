@@ -1,6 +1,6 @@
 displayName = Just Enough Items: Terraria Edition
 author = baixiaoxiao & Codex
-version = 0.1.82
+version = 0.1.90
 side = Both
 includeSource = true
 buildIgnore = *.csproj, *.csproj.user, bin/*, obj/*

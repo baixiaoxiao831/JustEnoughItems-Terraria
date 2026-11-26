@@ -6,6 +6,13 @@ Just Enough Items: Terraria Edition is an in-game item and recipe browser for Te
 
 [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3845723114)
 
+## 0.1.90 changelog
+
+- **On-demand textures.** JEI requests item, NPC, and crafting station textures as they appear on screen. This reduces texture loading and memory allocations at startup. Some icons may take a few frames to appear the first time you flip through pages quickly.
+- **Expanded English support.** Crafting categories, missing ingredient and station hints, bookmark actions, and AE order prompts are available in English. Drop, shop, Shimmer, fishing, and harvesting pages also follow the game language.
+- **Mod filter autocomplete.** Type `@` to browse enabled mods and vanilla Terraria in A–Z order. Add a prefix such as `@cala` to narrow the list. Scroll to browse, click to select, or press `Tab` repeatedly to autocomplete each match. Scrolling and autocomplete both stop at the last entry.
+- **Adjustable item grid.** Set the number of columns and rows independently in JEI’s client settings. Set either to `0` for automatic sizing. The grid fits within the available screen space.
+
 ## What you can look up
 
 | Topic | What JEI shows |

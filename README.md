@@ -35,3 +35,7 @@
 本项目为面向《泰拉瑞亚》的非官方适配。界面图像、指南图标及模组图标使用了 mezz 与 Just Enough Items 贡献者的作品，采用 MIT 许可。[原版 Just Enough Items](https://github.com/mezz/JustEnoughItems)
 
 随包中文字形源自 Noto Sans SC，采用 SIL Open Font License 1.1。拼音检索使用的 Unicode Unihan 读音数据采用 Unicode License V3。各项第三方素材按各自许可使用，完整版权和许可声明见模组包内的 `Licenses` 目录。
+
+## 问题反馈
+
+<img src="images/issue-report-zh.png" width="420" alt="提问时请附日志和截图，否则只能帮你算一卦。">

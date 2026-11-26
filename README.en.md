@@ -35,3 +35,7 @@ You’re welcome to feature this mod in guides, videos, and mod recommendations.
 This project is an unofficial Terraria adaptation of Just Enough Items for Minecraft. The interface artwork, in-game guide icon, and mod icon use artwork by mezz and the Just Enough Items contributors under the MIT License. [Original Just Enough Items project](https://github.com/mezz/JustEnoughItems)
 
 The bundled Chinese glyphs are derived from Noto Sans SC and are licensed under the SIL Open Font License 1.1. The Unihan pronunciation data used for Pinyin search is licensed under the Unicode License V3. Third-party materials remain available under their respective licenses. Full copyright and license notices are included in the mod’s `Licenses` folder.
+
+## Reporting an issue
+
+<img src="images/issue-report-en.png" width="420" alt="Without logs or screenshots, all I can do is read your fortune.">

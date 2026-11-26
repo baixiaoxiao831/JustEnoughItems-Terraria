@@ -6,6 +6,13 @@ Just Enough Items: Terraria Edition is an in-game item and recipe browser for Te
 
 [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3845723114)
 
+## 0.1.93 changelog (includes 0.1.92)
+
+- On Windows, focusing the JEI search field switches the IME to direct English input so you can type filters such as `@cala`. You can switch back to Chinese while searching. Leaving the field restores the previous input mode.
+- The system IME candidate window is anchored to the search cursor. During composition, the IME handles the arrow keys, Tab, Enter, and Esc so selecting a candidate does not trigger search history or mod autocomplete. Removed the duplicate in-game candidate bar.
+- The `@` suggestion list now includes only sources with items in the JEI catalog and hides mods that tModLoader marks as libraries.
+- Fixed cheat-mode pickup stopping as soon as the first item reached the cursor. Hold right-click over the same slot to pick up items progressively faster, as in the vanilla inventory.
+
 ## 0.1.90 changelog
 
 - **On-demand textures.** JEI requests item, NPC, and crafting station textures as they appear on screen. This reduces texture loading and memory allocations at startup. Some icons may take a few frames to appear the first time you flip through pages quickly.
